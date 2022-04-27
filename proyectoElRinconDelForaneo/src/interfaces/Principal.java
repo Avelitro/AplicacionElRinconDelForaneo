@@ -4,14 +4,17 @@
  */
 package interfaces;
 
+import java.awt.Frame;
+
 /**
  *
  * @author MHURDOCK
  */
 public class Principal extends javax.swing.JFrame {
-
+    
     public Principal() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -49,6 +52,11 @@ public class Principal extends javax.swing.JFrame {
         Registro.setText("Registrarse");
         Registro.setBorderPainted(false);
         Registro.setContentAreaFilled(false);
+        Registro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RegistroMouseClicked(evt);
+            }
+        });
         jPanel1.add(Registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1032, 12, -1, -1));
 
         Ingreso.setForeground(new java.awt.Color(254, 254, 254));
@@ -85,7 +93,19 @@ public class Principal extends javax.swing.JFrame {
 
     private void IngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoActionPerformed
         // TODO add your handling code here:
+        Principal principal = new Principal();
+        Loging logeo = new Loging(principal,true);
+        System.out.println(logeo);
+        logeo.setVisible(true);
+        System.out.println(logeo);
     }//GEN-LAST:event_IngresoActionPerformed
+
+    private void RegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistroMouseClicked
+        Principal principal = new Principal();
+        // TODO add your handling code here:
+        Registro registrar = new Registro(principal,true);
+        registrar.setVisible(true);
+    }//GEN-LAST:event_RegistroMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

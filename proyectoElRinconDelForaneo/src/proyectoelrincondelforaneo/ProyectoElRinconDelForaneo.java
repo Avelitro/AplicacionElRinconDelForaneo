@@ -4,6 +4,7 @@
  */
 package proyectoelrincondelforaneo;
 
+import interfaces.Principal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +19,8 @@ public class ProyectoElRinconDelForaneo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DatabaseConnection aux = new DatabaseConnection();
-        try {
-            aux.createpacientes("", "Marco", "Polo", "F");
-        } catch (SQLException ex) {
-            Logger.getLogger(ProyectoElRinconDelForaneo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Principal principal = new Principal();
+        principal.setVisible(true);
     }
-    
+
 }
