@@ -4,15 +4,34 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import clases.usuario;
+import clases.validacion;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author octavio
  */
 public class Registro extends javax.swing.JDialog {
-
+    private DatabaseConnection servicio;
+    private validacion mValidacion;
     public Registro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        servicio = new DatabaseConnection();
+        mValidacion = new validacion();
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+
+    Registro() {
+        servicio = new DatabaseConnection();
+        mValidacion = new validacion();
+        initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -20,17 +39,17 @@ public class Registro extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextCorreo = new javax.swing.JTextField();
-        jPasswordReg = new javax.swing.JPasswordField();
-        jComboTipo = new javax.swing.JComboBox<>();
+        tfCorreo = new javax.swing.JTextField();
+        tfPassword = new javax.swing.JPasswordField();
+        tfTipoUsuario = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextCorreo1 = new javax.swing.JTextField();
+        tfNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextCorreo2 = new javax.swing.JTextField();
+        tfApellido = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -39,34 +58,39 @@ public class Registro extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(27, 53, 164));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextCorreo.setText("Escribe tu correo electrónico");
-        jTextCorreo.addActionListener(new java.awt.event.ActionListener() {
+        tfCorreo.setText("Escribe tu correo electrónico");
+        tfCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCorreoActionPerformed(evt);
+                tfCorreoActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 430, -1));
+        jPanel1.add(tfCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 430, -1));
 
-        jPasswordReg.setText("Contraseña");
-        jPasswordReg.addActionListener(new java.awt.event.ActionListener() {
+        tfPassword.setText("Contraseña");
+        tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordRegActionPerformed(evt);
+                tfPasswordActionPerformed(evt);
             }
         });
-        jPanel1.add(jPasswordReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 430, -1));
+        jPanel1.add(tfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 430, -1));
 
-        jComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Negocio" }));
-        jComboTipo.addActionListener(new java.awt.event.ActionListener() {
+        tfTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Negocio" }));
+        tfTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboTipoActionPerformed(evt);
+                tfTipoUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 430, -1));
+        jPanel1.add(tfTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 430, -1));
 
         jButton1.setBackground(new java.awt.Color(255, 0, 0));
         jButton1.setForeground(new java.awt.Color(254, 254, 254));
         jButton1.setText("Aceptar");
         jButton1.setToolTipText("");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 560, 120, -1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -86,25 +110,25 @@ public class Registro extends javax.swing.JDialog {
         jLabel4.setText("Nombre");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
-        jTextCorreo1.setText("Escribe tu nombre (s)");
-        jTextCorreo1.addActionListener(new java.awt.event.ActionListener() {
+        tfNombre.setText("Escribe tu nombre (s)");
+        tfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCorreo1ActionPerformed(evt);
+                tfNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextCorreo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 430, -1));
+        jPanel1.add(tfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 430, -1));
 
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
         jLabel5.setText("Apellidos");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
-        jTextCorreo2.setText("Escribe tu apellido (s)");
-        jTextCorreo2.addActionListener(new java.awt.event.ActionListener() {
+        tfApellido.setText("Escribe tu apellido (s)");
+        tfApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCorreo2ActionPerformed(evt);
+                tfApellidoActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextCorreo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 430, -1));
+        jPanel1.add(tfApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 430, -1));
 
         jLabel6.setForeground(new java.awt.Color(254, 254, 254));
         jLabel6.setText("Correo");
@@ -130,25 +154,72 @@ public class Registro extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTipoActionPerformed
-        // TODO add your handling code here:  
-    }//GEN-LAST:event_jComboTipoActionPerformed
-
-    private void jPasswordRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordRegActionPerformed
+    private void tfTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTipoUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordRegActionPerformed
+    }//GEN-LAST:event_tfTipoUsuarioActionPerformed
 
-    private void jTextCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCorreoActionPerformed
+    private void tfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCorreoActionPerformed
+    }//GEN-LAST:event_tfPasswordActionPerformed
 
-    private void jTextCorreo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCorreo1ActionPerformed
+    private void tfCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCorreo1ActionPerformed
+        servicio.Conectar();
+        System.out.println(servicio.getUsuarioByCorreo(tfCorreo.getText()));
+        servicio.Desconectar();
+    }//GEN-LAST:event_tfCorreoActionPerformed
 
-    private void jTextCorreo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCorreo2ActionPerformed
+    private void tfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCorreo2ActionPerformed
+    }//GEN-LAST:event_tfNombreActionPerformed
+
+    private void tfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfApellidoActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        if(tfNombre.getText().equals("") || tfApellido.getText().equals("") || tfCorreo.getText().equals("") || tfPassword.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Llene todos los campos.");
+        }
+        else{
+            if(servicio.Conectar()){
+                if (mValidacion.ValidarEmail(tfCorreo.getText().trim())) {
+                    if(servicio.getUsuarioByCorreo(tfCorreo.getText()) == null) {
+                        String apellidoPaterno,apellidoMaterno,apellidos[];
+                        apellidos = tfApellido.getText().split(" ");
+                        apellidoPaterno = apellidos[0];
+                        apellidoMaterno = apellidos[1];
+                        usuario nUsuario = new usuario();
+                        nUsuario.setIdUsuario(0);
+                        nUsuario.setNombres(tfNombre.getText());
+                        nUsuario.setApellidoPaterno(apellidoPaterno);
+                        nUsuario.setApellidoMaterno(apellidoMaterno);
+                        nUsuario.setCorreo(tfCorreo.getText());
+                        nUsuario.setContrasena(nUsuario.encriptar(tfPassword.getText()));
+                        nUsuario.setTipoUsuario(tfTipoUsuario.getSelectedItem().toString());
+                        if(servicio.createUsuario(nUsuario)){
+                            JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente.");
+                            this.dispose();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "El usuario no se pudo crear.");
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Correo ya usado.");
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Correo invalido.");
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Error al conectar");
+            }
+            //servicio.Desconectar();
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -194,7 +265,6 @@ public class Registro extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -203,9 +273,10 @@ public class Registro extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordReg;
-    private javax.swing.JTextField jTextCorreo;
-    private javax.swing.JTextField jTextCorreo1;
-    private javax.swing.JTextField jTextCorreo2;
+    private javax.swing.JTextField tfApellido;
+    private javax.swing.JTextField tfCorreo;
+    private javax.swing.JTextField tfNombre;
+    private javax.swing.JPasswordField tfPassword;
+    private javax.swing.JComboBox<String> tfTipoUsuario;
     // End of variables declaration//GEN-END:variables
 }

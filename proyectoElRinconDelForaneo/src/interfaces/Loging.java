@@ -4,6 +4,14 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import clases.usuario;
+import clases.validacion;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author octavio
@@ -13,9 +21,21 @@ public class Loging extends javax.swing.JDialog {
     /**
      * Creates new form Loging
      */
+    private DatabaseConnection servicio;
+    private validacion mValidacion;
     public Loging(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        servicio = new DatabaseConnection();
+        mValidacion = new validacion();
+        this.setLocationRelativeTo(null);
+    }
+
+    Loging() {
+        initComponents();
+        servicio = new DatabaseConnection();
+        mValidacion = new validacion();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -29,8 +49,8 @@ public class Loging extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jTextCorreo = new javax.swing.JTextField();
-        jPasswordReg = new javax.swing.JPasswordField();
+        tfCorreo = new javax.swing.JTextField();
+        tfPassword = new javax.swing.JPasswordField();
         jButtonAceptar = new javax.swing.JButton();
         Icono = new javax.swing.JLabel();
         TituloVentana = new javax.swing.JLabel();
@@ -38,27 +58,37 @@ public class Loging extends javax.swing.JDialog {
         LabelCorreo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(1, 88, 255));
 
         jPanel2.setBackground(new java.awt.Color(27, 53, 164));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextCorreo.setText("Ingresa tu correo");
-        jPanel2.add(jTextCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 370, -1));
+        tfCorreo.setText("Ingresa tu correo");
+        jPanel2.add(tfCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 370, -1));
 
-        jPasswordReg.setText("Contraseña");
-        jPasswordReg.addActionListener(new java.awt.event.ActionListener() {
+        tfPassword.setText("Contraseña");
+        tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordRegActionPerformed(evt);
+                tfPasswordActionPerformed(evt);
             }
         });
-        jPanel2.add(jPasswordReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 380, 40));
+        jPanel2.add(tfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 380, 40));
 
         jButtonAceptar.setBackground(new java.awt.Color(255, 0, 0));
         jButtonAceptar.setForeground(new java.awt.Color(254, 254, 254));
         jButtonAceptar.setText("ACEPTAR");
         jButtonAceptar.setToolTipText("");
+        jButtonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonAceptarMouseClicked(evt);
+            }
+        });
         jPanel2.add(jButtonAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 140, -1));
 
         Icono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,9 +133,48 @@ public class Loging extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordRegActionPerformed
+    private void tfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordRegActionPerformed
+    }//GEN-LAST:event_tfPasswordActionPerformed
+
+    private void jButtonAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAceptarMouseClicked
+        // TODO add your handling code here:
+        usuario nUsuario = new usuario();
+        String Pasword = "";
+        if(!tfCorreo.getText().equals("") && !tfPassword.getText().equals("")){
+            if (mValidacion.ValidarEmail(tfCorreo.getText().trim())) {
+                if (servicio.Conectar()) { 
+                    nUsuario = servicio.getUsuarioByCorreo(tfCorreo.getText());
+                    Pasword = nUsuario.encriptar(tfPassword.getText());
+                    if(!(nUsuario == null)){
+                        if (Pasword.equals(nUsuario.getContrasena())) {
+                            JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
+                            HomeCliente menuCliente = new HomeCliente();
+                            menuCliente.setVisible(true);
+                            //this.dispose();
+                            System.exit(0);
+                        }else {
+                            JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
+                        }
+                    }else {
+                        JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al conectar");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Correo invalido.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Ingrese el usuario y contraseña");
+        }
+    }//GEN-LAST:event_jButtonAceptarMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        Principal principal = new Principal();
+        principal.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -138,12 +207,7 @@ public class Loging extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Loging dialog = new Loging(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
+                
                 dialog.setVisible(true);
             }
         });
@@ -157,7 +221,7 @@ public class Loging extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordReg;
-    private javax.swing.JTextField jTextCorreo;
+    private javax.swing.JTextField tfCorreo;
+    private javax.swing.JPasswordField tfPassword;
     // End of variables declaration//GEN-END:variables
 }

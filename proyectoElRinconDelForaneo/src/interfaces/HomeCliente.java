@@ -15,6 +15,7 @@ public class HomeCliente extends javax.swing.JFrame {
      */
     public HomeCliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
