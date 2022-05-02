@@ -24,7 +24,6 @@ public class ProyectoElRinconDelForaneo {
         } catch (SQLException ex) {
             Logger.getLogger(ProyectoElRinconDelForaneo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.print("Pruebs");
     }
-    
+     
 }
