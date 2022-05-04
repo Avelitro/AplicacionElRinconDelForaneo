@@ -22,9 +22,4 @@ public class ProyectoElRinconDelForaneo {
         Principal principal = new Principal();
         principal.setVisible(true);
     }
-<<<<<<< HEAD
-
-=======
-     
->>>>>>> Octavio
 }
