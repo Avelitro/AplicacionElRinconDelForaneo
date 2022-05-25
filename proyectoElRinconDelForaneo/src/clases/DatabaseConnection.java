@@ -31,7 +31,8 @@ public class DatabaseConnection {
     public boolean Conectar() {
         try {
             //Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://localhost/elrincon_delforaneo","root", "");
+            //con = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/elrincon_delfora", "joseabel1", "12345678");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/elrincon_delforaneo","root","");
             return con != null;
         } catch (Exception e) {
             return false;

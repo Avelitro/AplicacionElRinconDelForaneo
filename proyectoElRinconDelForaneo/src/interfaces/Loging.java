@@ -144,15 +144,25 @@ public class Loging extends javax.swing.JDialog {
         if(!tfCorreo.getText().equals("") && !tfPassword.getText().equals("")){
             if (mValidacion.ValidarEmail(tfCorreo.getText().trim())) {
                 if (servicio.Conectar()) { 
-                    nUsuario = servicio.getUsuarioByCorreo(tfCorreo.getText());
+                   nUsuario = servicio.getUsuarioByCorreo(tfCorreo.getText());
                     Pasword = nUsuario.encriptar(tfPassword.getText());
-                    if(!(nUsuario == null)){
-                        if (Pasword.equals(nUsuario.getContrasena())) {
+                    if(!(nUsuario == null))
+                    {
+                        if (Pasword.equals(nUsuario.getContrasena())) 
+                        {
                             JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
-                            HomeCliente menuCliente = new HomeCliente();
-                            menuCliente.setVisible(true);
                             //this.dispose();
-                            System.exit(0);
+                            if (!"Cliente".equals(nUsuario.getTipoUsuario())) {
+                                HomeVendedor menuVendedor = new HomeVendedor();
+                                menuVendedor.setVisible(true);
+                                this.dispose();
+                            } else {
+                                HomeCliente menuCliente = new HomeCliente();
+                                menuCliente.setVisible(true);
+                                this.dispose();
+                            }
+                            System.out.println(nUsuario.getTipoUsuario());
+                            //System.exit(0);
                         }else {
                             JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
                         }
