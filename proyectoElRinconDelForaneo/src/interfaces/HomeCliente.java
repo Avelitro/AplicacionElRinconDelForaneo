@@ -5,7 +5,6 @@
 package interfaces;
 
 /**
- *
  * @author octavio
  */
 public class HomeCliente extends javax.swing.JFrame {
