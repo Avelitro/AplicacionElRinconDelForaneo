@@ -1,5 +1,6 @@
-package clases;
+package entity;
 
+import clases.*;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import javax.crypto.Cipher;
@@ -20,8 +21,7 @@ import org.apache.commons.codec.binary.Base64;
 public class usuario {
     private int idUsuario;
     private String nombres;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
+    private String apellidos;
     private String correo;
     private String contraseña;
     private String tipoUsuario;
@@ -47,20 +47,13 @@ public class usuario {
         this.nombres = nombres;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
 
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getCorreo() {

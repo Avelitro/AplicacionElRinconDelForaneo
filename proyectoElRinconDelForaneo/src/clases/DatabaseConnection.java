@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import entity.usuario;
 
 /**
  *
@@ -30,8 +31,7 @@ public class DatabaseConnection {
 
     public boolean Conectar() {
         try {
-            //con = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/elrincon_delfora", "joseabel1", "12345678");
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+           //con = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/elrincon_delfora", "joseabel1", "12345678");
             con = DriverManager.getConnection("jdbc:mysql://localhost/elrincon_delforaneo","root","");
             return con != null;
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class DatabaseConnection {
         }
     }
     
-    public Boolean createUsuario(usuario nUsuario) {
+    /*public Boolean createUsuario(usuario nUsuario) {
         try {
             mStatement = con.createStatement();
             mStatement.execute("INSERT INTO usuarios VALUES ('" + nUsuario.getIdUsuario() + "','" + nUsuario.getNombres() + "','" + nUsuario.getApellidoPaterno()
@@ -56,7 +56,7 @@ public class DatabaseConnection {
             return false;
         }
         
-    }
+    }*/
     
     public usuario getUsuarioByCorreo(String correo) {
         usuario mUsuario = null;
@@ -67,8 +67,7 @@ public class DatabaseConnection {
                 mUsuario = new usuario();
                 mUsuario.setIdUsuario(mResultSet.getInt("idUsuario"));
                 mUsuario.setNombres(mResultSet.getString("nombres"));
-                mUsuario.setApellidoPaterno(mResultSet.getString("apellidoPaterno"));
-                mUsuario.setApellidoMaterno(mResultSet.getString("apellidoMaterno"));
+                mUsuario.setApellidos(mResultSet.getString("apellidos"));
                 mUsuario.setCorreo(mResultSet.getString("correo"));
                 mUsuario.setContrasena(mResultSet.getString("contraseña"));
                 mUsuario.setTipoUsuario(mResultSet.getString("tipoUsuario"));

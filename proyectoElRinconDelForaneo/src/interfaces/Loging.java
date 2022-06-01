@@ -5,7 +5,7 @@
 package interfaces;
 
 import clases.DatabaseConnection;
-import clases.usuario;
+import entity.usuario;
 import clases.validacion;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
