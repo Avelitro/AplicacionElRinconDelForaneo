@@ -119,10 +119,12 @@ public class Loging extends javax.swing.JDialog {
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
+        //enviarDatosUsuario()
         usuario nUsuario = new usuario();
         String Pasword = "";
         if(!jTextCorreo.getText().equals("") && !jPasswordReg.getText().equals("")){
             if (mValidacion.ValidarEmail(jTextCorreo.getText().trim())) {
+                System.out.println("Investigar"+jTextCorreo.getText().trim());
                 if (servicio.Conectar()) { 
                    nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
                     Pasword = nUsuario.encriptar(jPasswordReg.getText());
@@ -221,4 +223,16 @@ public class Loging extends javax.swing.JDialog {
     private javax.swing.JPasswordField jPasswordReg;
     private javax.swing.JTextField jTextCorreo;
     // End of variables declaration//GEN-END:variables
+    private void enviarDatosUsuarios()
+    {
+        
+    }
+    private void InicioSesion()
+    {
+        
+    }
+    private void datosIncorrectos()
+    {
+        
+    }
 }

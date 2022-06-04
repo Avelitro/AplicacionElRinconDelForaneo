@@ -45,18 +45,18 @@ public class DatabaseConnection {
         }
     }
     
-    /*public Boolean createUsuario(usuario nUsuario) {
+    public Boolean createUsuario(usuario nUsuario) {
         try {
             mStatement = con.createStatement();
-            mStatement.execute("INSERT INTO usuarios VALUES ('" + nUsuario.getIdUsuario() + "','" + nUsuario.getNombres() + "','" + nUsuario.getApellidoPaterno()
-                    + "','" + nUsuario.getApellidoMaterno() + "','" + nUsuario.getCorreo() + "','" + nUsuario.getContrasena() + "','" + nUsuario.getTipoUsuario() + "')");
+            mStatement.execute("INSERT INTO usuarios VALUES ('" + nUsuario.getIdUsuario() + "','" + nUsuario.getNombres() 
+                    + "','" + nUsuario.getApellidos() + "','" + nUsuario.getCorreo() + "','" + nUsuario.getContrasena() + "','" + nUsuario.getTipoUsuario() + "')");
             return true;
         } catch (SQLException e) {
             System.err.println(e.toString());
             return false;
         }
         
-    }*/
+    }
     
     public usuario getUsuarioByCorreo(String correo) {
         usuario mUsuario = null;

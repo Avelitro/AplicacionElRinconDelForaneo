@@ -7,7 +7,6 @@ package interfaces;
 import clases.DatabaseConnection;
 import entity.usuario;
 import clases.validacion;
-import control.RegistrarUsuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Registro extends javax.swing.JDialog {
     private DatabaseConnection servicio;
     private validacion mValidacion;
-    private RegistrarUsuario servicio2;
+    
     /**
      * Creates new form P_Registro
      */
@@ -302,7 +301,7 @@ public class Registro extends javax.swing.JDialog {
         //Encriptación de la contraseña
         nUsuario.setContrasena(nUsuario.encriptar(tfPassword.getText()));
         nUsuario.setTipoUsuario(tfTipoUsuario.getSelectedItem().toString());
-        if(servicio2.envDataUser(nUsuario))
+        if(servicio.createUsuario(nUsuario))
         {
             registroCorrecto();
         }
