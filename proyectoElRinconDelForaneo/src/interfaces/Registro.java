@@ -58,10 +58,12 @@ public class Registro extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         MensajeNombre = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
-        MensajeApellido = new javax.swing.JLabel();
-        tfApellido = new javax.swing.JTextField();
+        tfApellidoM = new javax.swing.JTextField();
         MensajeCorreo = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        MensajeApellido1 = new javax.swing.JLabel();
+        MensajeApellido2 = new javax.swing.JLabel();
+        tfApellidoP = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +89,7 @@ public class Registro extends javax.swing.JDialog {
                 tfCorreoActionPerformed(evt);
             }
         });
-        jPanel1.add(tfCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 430, -1));
+        jPanel1.add(tfCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 430, -1));
 
         tfPassword.setText("2580");
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +97,7 @@ public class Registro extends javax.swing.JDialog {
                 tfPasswordActionPerformed(evt);
             }
         });
-        jPanel1.add(tfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 430, -1));
+        jPanel1.add(tfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 430, -1));
 
         tfTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Negocio" }));
         tfTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +105,7 @@ public class Registro extends javax.swing.JDialog {
                 tfTipoUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(tfTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 430, -1));
+        jPanel1.add(tfTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 430, -1));
 
         jButton1.setBackground(new java.awt.Color(255, 0, 0));
         jButton1.setForeground(new java.awt.Color(254, 254, 254));
@@ -114,7 +116,7 @@ public class Registro extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 560, 120, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, 120, -1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuenta (2).png"))); // NOI18N
@@ -127,7 +129,7 @@ public class Registro extends javax.swing.JDialog {
 
         jLabel3.setForeground(new java.awt.Color(254, 254, 254));
         jLabel3.setText("Tipo de usuario");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, -1, -1));
 
         MensajeNombre.setForeground(new java.awt.Color(254, 254, 254));
         MensajeNombre.setText("Nombre");
@@ -141,38 +143,48 @@ public class Registro extends javax.swing.JDialog {
         });
         jPanel1.add(tfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 430, -1));
 
-        MensajeApellido.setForeground(new java.awt.Color(254, 254, 254));
-        MensajeApellido.setText("Apellidos");
-        jPanel1.add(MensajeApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
-
-        tfApellido.setText("Escribe tu apellido (s)");
-        tfApellido.addActionListener(new java.awt.event.ActionListener() {
+        tfApellidoM.setText("Escribe tu apellido materno");
+        tfApellidoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfApellidoActionPerformed(evt);
+                tfApellidoMActionPerformed(evt);
             }
         });
-        jPanel1.add(tfApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 430, -1));
+        jPanel1.add(tfApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 430, -1));
 
         MensajeCorreo.setForeground(new java.awt.Color(254, 254, 254));
         MensajeCorreo.setText("Correo");
-        jPanel1.add(MensajeCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        jPanel1.add(MensajeCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
         jLabel7.setForeground(new java.awt.Color(254, 254, 254));
         jLabel7.setText("Contraseña");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
+
+        MensajeApellido1.setForeground(new java.awt.Color(254, 254, 254));
+        MensajeApellido1.setText("Apellido Materno");
+        jPanel1.add(MensajeApellido1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+
+        MensajeApellido2.setForeground(new java.awt.Color(254, 254, 254));
+        MensajeApellido2.setText("Apellido Paterno");
+        jPanel1.add(MensajeApellido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+
+        tfApellidoP.setText("Escribe tu apellido paterno");
+        tfApellidoP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfApellidoPActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tfApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 430, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -198,12 +210,12 @@ public class Registro extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNombreActionPerformed
 
-    private void tfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoActionPerformed
+    private void tfApellidoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfApellidoActionPerformed
+    }//GEN-LAST:event_tfApellidoMActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       if(tfNombre.getText().equals("") || tfApellido.getText().equals("") || tfCorreo.getText().equals("") || tfPassword.getText().equals("")){
+       if(tfNombre.getText().equals("") || tfApellidoP.getText().equals("") || tfApellidoM.getText().equals("") || tfCorreo.getText().equals("") || tfPassword.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Llene todos los campos.");
         }
         else{
@@ -212,7 +224,7 @@ public class Registro extends javax.swing.JDialog {
                 {
                     if(servicio.getUsuarioByCorreo(tfCorreo.getText()) == null) 
                     {
-                        envDataUser(tfNombre.getText(),tfApellido.getText(),tfCorreo.getText(),tfPassword.getText(),tfTipoUsuario.getSelectedItem().toString());
+                        envDataUser(tfNombre.getText(),tfApellidoP.getText(),tfApellidoM.getText(),tfCorreo.getText(),tfPassword.getText(),tfTipoUsuario.getSelectedItem().toString());
                     }
                     else
                     {
@@ -226,9 +238,13 @@ public class Registro extends javax.swing.JDialog {
             else {
                 JOptionPane.showMessageDialog(null, "Error al conectar");
             }
-            //servicio.Desconectar();
+            servicio.Desconectar();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tfApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfApellidoPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,7 +290,8 @@ public class Registro extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel MensajeApellido;
+    private javax.swing.JLabel MensajeApellido1;
+    private javax.swing.JLabel MensajeApellido2;
     private javax.swing.JLabel MensajeCorreo;
     private javax.swing.JLabel MensajeNombre;
     private javax.swing.JButton jButton1;
@@ -285,35 +302,51 @@ public class Registro extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField tfApellido;
+    private javax.swing.JTextField tfApellidoM;
+    private javax.swing.JTextField tfApellidoP;
     private javax.swing.JTextField tfCorreo;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JPasswordField tfPassword;
     private javax.swing.JComboBox<String> tfTipoUsuario;
     // End of variables declaration//GEN-END:variables
-    public void envDataUser(String nombre, String apellidos, String correo, String password, String tipoUsuario)
+    public void envDataUser(String nombre, String apellidoP, String apellidoM, String correo, String password, String tipoUsuario)
     { 
         usuario nUsuario = new usuario();
         nUsuario.setIdUsuario(0);
         nUsuario.setNombres(tfNombre.getText());
-        nUsuario.setApellidos(apellidos);
+        nUsuario.setApellidoPaterno(apellidoP);
+        nUsuario.setApellidoMaterno(apellidoM);
         nUsuario.setCorreo(tfCorreo.getText());
         //Encriptación de la contraseña
         nUsuario.setContrasena(nUsuario.encriptar(tfPassword.getText()));
         nUsuario.setTipoUsuario(tfTipoUsuario.getSelectedItem().toString());
-        if(servicio.createUsuario(nUsuario))
+        int idUsuario = servicio.createUsuario(nUsuario);
+        if( idUsuario != 0)
         {
-            registroCorrecto();
+            if(tipoUsuario.equals("Negocio")){
+                if( servicio.createEstablecimiento(idUsuario) )
+                {
+                    registroCorrecto();
+                }
+                else
+                {
+                    registroIncorrecto();
+                }
+            }
+            else
+                registroCorrecto();
         }
         else
         {
             registroIncorrecto();
         }
-       System.out.println("Nombre: "+ nombre);
-       System.out.println("Apellidos: "+ apellidos);
-       System.out.println("Correo: "+ correo);
-       System.out.println("Password: "+ password);
-       System.out.println("TipoUsuario: "+ tipoUsuario);
+        System.out.println("Nombre: "+ nombre);
+        //System.out.println("Apellidos: "+ apellidos);
+        System.out.println("Correo: "+ correo);
+        System.out.println("Password: "+ password);
+        System.out.println("TipoUsuario: "+ tipoUsuario);
+        
+        
     }
     private void registroCorrecto()
     {

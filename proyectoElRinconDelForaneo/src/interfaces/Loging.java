@@ -28,7 +28,7 @@ public class Loging extends javax.swing.JDialog {
         initComponents();
         servicio = new DatabaseConnection();
         mValidacion = new validacion();
-        this.setLocationRelativeTo(null);;
+        this.setLocationRelativeTo(null);
     }
     
     Loging(){
@@ -124,9 +124,9 @@ public class Loging extends javax.swing.JDialog {
         String Pasword = "";
         if(!jTextCorreo.getText().equals("") && !jPasswordReg.getText().equals("")){
             if (mValidacion.ValidarEmail(jTextCorreo.getText().trim())) {
-                System.out.println("Investigar"+jTextCorreo.getText().trim());
                 if (servicio.Conectar()) { 
-                   nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
+                    nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
+                    System.out.println("Investigar:"+nUsuario.getCorreo());
                     Pasword = nUsuario.encriptar(jPasswordReg.getText());
                     if(!(nUsuario == null))
                     {
@@ -135,7 +135,7 @@ public class Loging extends javax.swing.JDialog {
                             JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
                             //this.dispose();
                             if (!"Cliente".equals(nUsuario.getTipoUsuario())) {
-                                HomeVendedor menuVendedor = new HomeVendedor();
+                                HomeVendedor menuVendedor = new HomeVendedor(nUsuario.getIdUsuario());
                                 menuVendedor.setVisible(true);
                                 this.dispose();
                             } else {

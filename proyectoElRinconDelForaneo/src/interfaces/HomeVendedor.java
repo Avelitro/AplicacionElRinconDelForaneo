@@ -4,8 +4,11 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import clases.validacion;
 import javax.swing.JPanel;
-
+import entity.Platillos;
+import javax.swing.JOptionPane;
 /**
  *
  * @author octavio
@@ -15,6 +18,26 @@ public class HomeVendedor extends javax.swing.JFrame {
     /**
      * Creates new form HomeVendedor
      */
+    long idEstablecimiento;
+    long idUsuario;
+    private DatabaseConnection servicio;
+    public HomeVendedor(long idUsuario) {
+        initComponents();
+        this.idUsuario = idUsuario;
+        System.out.println("idUsuario: "+this.idUsuario);
+        servicio = new DatabaseConnection();
+        if(servicio.Conectar()){
+                this.idEstablecimiento = servicio.getEstablecimientoByUsuario(this.idUsuario);
+                System.out.println("idEstablecimiento: "+ this.idEstablecimiento);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Error al conectarse a la base de datos.");
+            }
+            servicio.Desconectar();
+        
+        ListadoPlatillos listado = new ListadoPlatillos();
+        MostrarPanel(listado.getFondo());
+    }
     public HomeVendedor() {
         initComponents();
         
@@ -30,7 +53,17 @@ public class HomeVendedor extends javax.swing.JFrame {
         Content.revalidate();
         Content.repaint();
     }
-
+    /*public void listarPlatillo()
+    {
+        platillo nPlatillo=new platillo();
+        if(servicio.Conectar())
+        {
+          nPlatillo=servicio.getPlatillosByEstablecimiento(1);
+            System.out.println("PLATILLO: "+nPlatillo);  
+        }
+        
+        
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,7 +190,7 @@ public class HomeVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_SalidaActionPerformed
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
-        AgregarPlatillos platillos = new AgregarPlatillos ();
+        AgregarPlatillos platillos = new AgregarPlatillos (this.idEstablecimiento);
         MostrarPanel (platillos.getFondo());
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
@@ -172,7 +205,7 @@ public class HomeVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnListarActionPerformed
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
-        ActualizarMenu menu = new ActualizarMenu();
+        ActualizarMenu menu = new ActualizarMenu(this.idEstablecimiento);
         MostrarPanel(menu.getFondo());
     }//GEN-LAST:event_BtnActualizarActionPerformed
 
@@ -209,6 +242,7 @@ public class HomeVendedor extends javax.swing.JFrame {
                 new HomeVendedor().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -223,4 +257,5 @@ public class HomeVendedor extends javax.swing.JFrame {
     private javax.swing.JLabel Usuario;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+    //public void 
 }

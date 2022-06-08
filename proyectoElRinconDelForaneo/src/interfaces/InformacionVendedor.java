@@ -16,6 +16,7 @@ public class InformacionVendedor extends javax.swing.JFrame {
      * Creates new form InformacionVendedor
      */
     public InformacionVendedor() {
+        //REalizar procedimiento
         initComponents();
     }
     

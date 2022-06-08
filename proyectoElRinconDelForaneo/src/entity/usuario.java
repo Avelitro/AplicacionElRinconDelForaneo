@@ -21,7 +21,8 @@ import org.apache.commons.codec.binary.Base64;
 public class usuario {
     private int idUsuario;
     private String nombres;
-    private String apellidos;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String correo;
     private String contraseña;
     private String tipoUsuario;
@@ -47,13 +48,22 @@ public class usuario {
         this.nombres = nombres;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
     }
 
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+    
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getCorreo() {
