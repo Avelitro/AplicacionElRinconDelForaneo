@@ -35,7 +35,7 @@ public class HomeVendedor extends javax.swing.JFrame {
             }
             servicio.Desconectar();
         
-        ListadoPlatillos listado = new ListadoPlatillos();
+        ListadoPlatillos listado = new ListadoPlatillos(this.idEstablecimiento);
         MostrarPanel(listado.getFondo());
     }
     public HomeVendedor() {
@@ -195,12 +195,12 @@ public class HomeVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
     private void BtnInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInformacionActionPerformed
-        InformacionVendedor informacion = new InformacionVendedor();
+        InformacionVendedor informacion = new InformacionVendedor(this.idEstablecimiento);
         MostrarPanel (informacion.getFondo());
     }//GEN-LAST:event_BtnInformacionActionPerformed
 
     private void BtnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnListarActionPerformed
-        ListadoPlatillos listado = new ListadoPlatillos();
+        ListadoPlatillos listado = new ListadoPlatillos(this.idEstablecimiento);
         MostrarPanel(listado.getFondo());
     }//GEN-LAST:event_BtnListarActionPerformed
 

@@ -4,7 +4,12 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import entity.Platillos;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,10 +20,41 @@ public class ListadoPlatillos extends javax.swing.JFrame {
     /**
      * Creates new form ListadoPlatillos
      */
+    ArrayList<Platillos> listPlatillos = new ArrayList<>();
+    ArrayList<Integer> listSelect = new ArrayList<>();
+    DatabaseConnection servicio;
+    private long idEstablecimiento;
+    DefaultTableModel dtm = new DefaultTableModel();
     public ListadoPlatillos() {
         initComponents();
+        servicio = new DatabaseConnection();
     }
-    
+    public ListadoPlatillos(long idEstablecimiento) {
+        initComponents();
+        this.idEstablecimiento = idEstablecimiento;
+        listarPlatillo(this.idEstablecimiento);
+    }
+    private void listarPlatillo(long idEstablecimiento)
+    {
+        servicio = new DatabaseConnection();
+        String[] titulo = new String[]{"Nombre del platillo","Descripción","Precio"};
+        dtm.setColumnIdentifiers(titulo);
+        TablaPlatillos.setModel(dtm);
+        
+        if(servicio.Conectar()){
+            listPlatillos = servicio.recibirPlatillos(idEstablecimiento);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Error al conectar");            
+        
+        for(Platillos reco:listPlatillos)
+            mostrarPlatillo(reco);
+    }
+    public void mostrarPlatillo(Platillos platillo){
+       dtm.addRow(new Object[]{
+           platillo.getNombrePlatillo(), platillo.getDescripcion(), String.valueOf(platillo.getPrecio())
+       });
+    }
     public JPanel getFondo() {
         return Background ;
     }

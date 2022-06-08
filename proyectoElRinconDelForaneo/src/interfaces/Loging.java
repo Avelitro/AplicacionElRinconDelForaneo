@@ -120,37 +120,12 @@ public class Loging extends javax.swing.JDialog {
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
         //enviarDatosUsuario()
-        usuario nUsuario = new usuario();
-        String Pasword = "";
+        
         if(!jTextCorreo.getText().equals("") && !jPasswordReg.getText().equals("")){
             if (mValidacion.ValidarEmail(jTextCorreo.getText().trim())) {
                 if (servicio.Conectar()) { 
-                    nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
-                    System.out.println("Investigar:"+nUsuario.getCorreo());
-                    Pasword = nUsuario.encriptar(jPasswordReg.getText());
-                    if(!(nUsuario == null))
-                    {
-                        if (Pasword.equals(nUsuario.getContrasena())) 
-                        {
-                            JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
-                            //this.dispose();
-                            if (!"Cliente".equals(nUsuario.getTipoUsuario())) {
-                                HomeVendedor menuVendedor = new HomeVendedor(nUsuario.getIdUsuario());
-                                menuVendedor.setVisible(true);
-                                this.dispose();
-                            } else {
-                                HomeCliente menuCliente = new HomeCliente();
-                                menuCliente.setVisible(true);
-                                this.dispose();
-                            }
-                            System.out.println(nUsuario.getTipoUsuario());
-                            //System.exit(0);
-                        }else {
-                            JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
-                        }
-                    }else {
-                        JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta");
-                    }
+                    enviarDatosUsuarios(jTextCorreo.getText());
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Error al conectar");
                 }
@@ -223,16 +198,43 @@ public class Loging extends javax.swing.JDialog {
     private javax.swing.JPasswordField jPasswordReg;
     private javax.swing.JTextField jTextCorreo;
     // End of variables declaration//GEN-END:variables
-    private void enviarDatosUsuarios()
+    private void enviarDatosUsuarios(String Correo)
     {
-        
+        usuario nUsuario = new usuario();
+        String Pasword = "";
+        nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
+        //System.out.println("Investigar:"+nUsuario.getCorreo());
+        Pasword = nUsuario.encriptar(jPasswordReg.getText());
+        if(!(nUsuario == null))
+            {
+                if (Pasword.equals(nUsuario.getContrasena())) 
+                    {
+                        JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
+                        InicioSesion(nUsuario.getTipoUsuario(),nUsuario.getIdUsuario());
+                        //this.dispose();
+                        //System.out.println(nUsuario.getTipoUsuario());
+                        //System.exit(0);
+                        }else {
+                            datosIncorrectos();
+                        }
+                    }else {
+                        datosIncorrectos();
+                    }
     }
-    private void InicioSesion()
+    private void InicioSesion(String tipoUsuario,long idUsuario)
     {
-        
+        if (!"Cliente".equals(tipoUsuario)) {
+            HomeVendedor menuVendedor = new HomeVendedor(idUsuario);
+            menuVendedor.setVisible(true);
+            this.dispose();
+        } else {
+            HomeCliente menuCliente = new HomeCliente();
+            menuCliente.setVisible(true);
+            this.dispose();
+        }
     }
     private void datosIncorrectos()
     {
-        
+        JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
     }
 }

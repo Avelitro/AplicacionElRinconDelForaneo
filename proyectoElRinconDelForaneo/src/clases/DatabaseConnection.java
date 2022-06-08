@@ -170,20 +170,19 @@ public class DatabaseConnection {
                 platillo.setPrecio(mResultSet.getFloat("precio"));
                 platillo.setIdEstablecimiento(mResultSet.getLong("idEstablecimiento"));
                 platillo.setValidado(mResultSet.getInt("validado"));
-                System.out.println("Nombre del Platillo: "+mResultSet.getString("nombrePlatillo"));
+                //System.out.println("Nombre del Platillo: "+mResultSet.getString("nombrePlatillo"));
                 platillos.add(platillo);
             }
-            System.out.println("Tamaño"+platillos.size());
+            //System.out.println("Tamaño"+platillos.size());
             return platillos;
         } catch (SQLException e){
             return null;
         }
-        
         //return platillos;
     }
     
     public boolean modificarMenu(long idPlatillo,int valor){
-        System.out.println("\n"+idPlatillo +"  "+valor);
+        //System.out.println("\n"+idPlatillo +"  "+valor);
         try{
             //mStatement = con.createStatement();
             mStatement.executeUpdate("UPDATE platillos SET validado = ' "+ valor +" ' WHERE platillos.idPlatillo = ' "+idPlatillo+" ' ");
@@ -210,4 +209,21 @@ public class DatabaseConnection {
         return validez;
     }
     
+    public ArrayList<String> getEstablecimiento(long idEstablecimiento){
+        ArrayList<String> establecimiento = new ArrayList<>();  
+        try{
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT nombreEstablecimiento,direccion,telefono FROM establecimientos WHERE idEstablecimiento = '" + idEstablecimiento + "' ");
+            
+            while(mResultSet.next()){
+                establecimiento.add(mResultSet.getString("nombreEstablecimiento"));
+                establecimiento.add(mResultSet.getString("direccion"));
+                establecimiento.add(mResultSet.getString("telefono"));
+            }
+            return establecimiento;
+        } catch (SQLException e){
+            return null;
+        }
+        //return platillos;
+    }
 }
