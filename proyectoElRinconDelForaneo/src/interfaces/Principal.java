@@ -4,17 +4,17 @@
  */
 package interfaces;
 
-import java.awt.Frame;
-
 /**
  *
- * @author MHURDOCK
+ * @author octavio
  */
 public class Principal extends javax.swing.JFrame {
-    
+
+    /**
+     * Creates new form P_Principal
+     */
     public Principal() {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -26,15 +26,12 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
         Background = new javax.swing.JPanel();
         ImgFondo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         Registro = new javax.swing.JButton();
         Ingreso = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +54,11 @@ public class Principal extends javax.swing.JFrame {
                 RegistroMouseClicked(evt);
             }
         });
+        Registro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistroActionPerformed(evt);
+            }
+        });
         jPanel1.add(Registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1032, 12, -1, -1));
 
         Ingreso.setForeground(new java.awt.Color(254, 254, 254));
@@ -64,6 +66,11 @@ public class Principal extends javax.swing.JFrame {
         Ingreso.setText("Ingresar");
         Ingreso.setBorderPainted(false);
         Ingreso.setContentAreaFilled(false);
+        Ingreso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                IngresoMouseClicked(evt);
+            }
+        });
         Ingreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IngresoActionPerformed(evt);
@@ -93,21 +100,59 @@ public class Principal extends javax.swing.JFrame {
 
     private void IngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoActionPerformed
         // TODO add your handling code here:
+       
+    }//GEN-LAST:event_IngresoActionPerformed
+
+    private void IngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IngresoMouseClicked
+        // TODO add your handling code here:
         Principal principal = new Principal();
         Loging logeo = new Loging(principal,true);
         System.out.println(logeo);
         logeo.setVisible(true);
         System.out.println(logeo);
-    }//GEN-LAST:event_IngresoActionPerformed
+    }//GEN-LAST:event_IngresoMouseClicked
 
     private void RegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistroMouseClicked
         Principal principal = new Principal();
         // TODO add your handling code here:
         Registro registrar = new Registro(principal,true);
         registrar.setVisible(true);
+        
     }//GEN-LAST:event_RegistroMouseClicked
 
+    private void RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RegistroActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
@@ -120,7 +165,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel ImgFondo;
     private javax.swing.JButton Ingreso;
     private javax.swing.JButton Registro;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

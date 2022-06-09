@@ -194,7 +194,7 @@ public class DatabaseConnection {
         
     }
     
-    public int marcadorChecbox(int idPlatillo){
+    public int marcadorChecbox(long idPlatillo){
         int validez = -1;
         try{
             mStatement = con.createStatement();

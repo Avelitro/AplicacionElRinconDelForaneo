@@ -69,6 +69,7 @@ public class InformacionVendedor extends javax.swing.JFrame {
         nombreEstablecimiento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         direccionEstablecimiento = new javax.swing.JTextField();
+        ButtonAcept = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +99,11 @@ public class InformacionVendedor extends javax.swing.JFrame {
             }
         });
         Background.add(direccionEstablecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 722, -1));
+
+        ButtonAcept.setBackground(new java.awt.Color(255, 0, 6));
+        ButtonAcept.setForeground(new java.awt.Color(254, 254, 254));
+        ButtonAcept.setText("Guardar");
+        Background.add(ButtonAcept, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 110, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,6 +169,7 @@ public class InformacionVendedor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
+    private javax.swing.JButton ButtonAcept;
     private javax.swing.JTextField direccionEstablecimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

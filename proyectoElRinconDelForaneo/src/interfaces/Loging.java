@@ -233,8 +233,8 @@ public class Loging extends javax.swing.JDialog {
             this.dispose();
         }
     }
-    private void datosIncorrectos()
-    {
+    
+    private void datosIncorrectos(){
         JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
     }
 }

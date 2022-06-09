@@ -65,7 +65,7 @@ public class AgregarPlatillos extends javax.swing.JFrame {
         Signo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         Signo.setForeground(new java.awt.Color(254, 254, 254));
         Signo.setText("$");
-        Background.add(Signo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 170, 20, 30));
+        Background.add(Signo, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 160, 20, 50));
 
         tfPrecio.setBackground(new java.awt.Color(1, 1, 1));
         tfPrecio.setForeground(new java.awt.Color(254, 254, 254));
@@ -76,7 +76,7 @@ public class AgregarPlatillos extends javax.swing.JFrame {
                 tfPrecioActionPerformed(evt);
             }
         });
-        Background.add(tfPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 170, 110, 30));
+        Background.add(tfPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 160, 110, 50));
 
         tfNombrePlatillo.setText("Escribe el nombre del platillo");
         tfNombrePlatillo.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +84,7 @@ public class AgregarPlatillos extends javax.swing.JFrame {
                 tfNombrePlatilloActionPerformed(evt);
             }
         });
-        Background.add(tfNombrePlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 520, 50));
+        Background.add(tfNombrePlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 400, 50));
 
         tfDescripcion.setColumns(20);
         tfDescripcion.setRows(5);

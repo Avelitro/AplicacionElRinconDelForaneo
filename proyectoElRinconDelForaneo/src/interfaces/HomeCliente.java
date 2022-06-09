@@ -5,16 +5,16 @@
 package interfaces;
 
 /**
+ *
  * @author octavio
  */
 public class HomeCliente extends javax.swing.JFrame {
 
     /**
-     * Creates new form HomeCliente
+     * Creates new form P_HomeCliente
      */
     public HomeCliente() {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -26,36 +26,71 @@ public class HomeCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Background = new javax.swing.JPanel();
+        tituloPlace = new javax.swing.JPanel();
+        Usuario = new javax.swing.JLabel();
+        Salida = new javax.swing.JButton();
+        TituloLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         ImgFondo = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        Titulo = new java.awt.Label();
-        Registro = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        Background.setBackground(new java.awt.Color(254, 254, 254));
+        Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tituloPlace.setBackground(new java.awt.Color(27, 53, 164));
+        tituloPlace.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Usuario.setForeground(new java.awt.Color(254, 254, 254));
+        Usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuenta (2).png"))); // NOI18N
+        Usuario.setText("Usuario");
+        tituloPlace.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, -2, 130, 80));
+
+        Salida.setForeground(new java.awt.Color(253, 251, 251));
+        Salida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar-sesion (1).png"))); // NOI18N
+        Salida.setText("Salir");
+        Salida.setBorderPainted(false);
+        Salida.setContentAreaFilled(false);
+        Salida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalidaActionPerformed(evt);
+            }
+        });
+        tituloPlace.add(Salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 0, 120, 80));
+
+        TituloLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TituloLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/LogoLettras.png"))); // NOI18N
+        tituloPlace.add(TituloLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 1190, 80));
+
+        Background.add(tituloPlace, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 80));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "", ""
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        Background.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 130, 1010, 280));
+
         ImgFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoOp1.jpg"))); // NOI18N
-
-        jPanel1.setBackground(new java.awt.Color(27, 53, 164));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Titulo.setAlignment(java.awt.Label.CENTER);
-        Titulo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        Titulo.setForeground(new java.awt.Color(254, 254, 254));
-        Titulo.setText("El rincón del foráneo");
-        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 182, 84));
-
-        Registro.setForeground(new java.awt.Color(253, 251, 251));
-        Registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar-sesion (1).png"))); // NOI18N
-        Registro.setText("Salir");
-        Registro.setBorderPainted(false);
-        Registro.setContentAreaFilled(false);
-        jPanel1.add(Registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 10, -1, 60));
-
-        jLabel2.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario (1).png"))); // NOI18N
-        jLabel2.setText("Usuario");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 10, -1, 60));
+        Background.add(ImgFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 1200, 610));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,9 +100,7 @@ public class HomeCliente extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(ImgFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -76,14 +109,16 @@ public class HomeCliente extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(ImgFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SalidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -111,6 +146,7 @@ public class HomeCliente extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(HomeCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -121,10 +157,13 @@ public class HomeCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Background;
     private javax.swing.JLabel ImgFondo;
-    private javax.swing.JButton Registro;
-    private java.awt.Label Titulo;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton Salida;
+    private javax.swing.JLabel TituloLabel;
+    private javax.swing.JLabel Usuario;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JPanel tituloPlace;
     // End of variables declaration//GEN-END:variables
 }
