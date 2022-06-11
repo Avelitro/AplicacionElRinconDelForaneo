@@ -104,6 +104,11 @@ public class HomeVendedor extends javax.swing.JFrame {
         Salida.setText("Salir");
         Salida.setBorderPainted(false);
         Salida.setContentAreaFilled(false);
+        Salida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SalidaMouseClicked(evt);
+            }
+        });
         Salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalidaActionPerformed(evt);
@@ -208,6 +213,14 @@ public class HomeVendedor extends javax.swing.JFrame {
         ActualizarMenu menu = new ActualizarMenu(this.idEstablecimiento);
         MostrarPanel(menu.getFondo());
     }//GEN-LAST:event_BtnActualizarActionPerformed
+
+    private void SalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalidaMouseClicked
+        // TODO add your handling code here:
+        //Salida
+        Principal principal = new Principal();
+        principal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalidaMouseClicked
 
     /**
      * @param args the command line arguments

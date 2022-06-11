@@ -103,6 +103,11 @@ public class InformacionVendedor extends javax.swing.JFrame {
         ButtonAcept.setBackground(new java.awt.Color(255, 0, 6));
         ButtonAcept.setForeground(new java.awt.Color(254, 254, 254));
         ButtonAcept.setText("Guardar");
+        ButtonAcept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAceptActionPerformed(evt);
+            }
+        });
         Background.add(ButtonAcept, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 110, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,6 +136,17 @@ public class InformacionVendedor extends javax.swing.JFrame {
     private void direccionEstablecimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionEstablecimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_direccionEstablecimientoActionPerformed
+
+    private void ButtonAceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptActionPerformed
+        // TODO add your handling code here:
+        nombreEstablecimiento.getText();
+        direccionEstablecimiento.getText();
+        telefonoEstablecimiento.getText();
+        if(servicio.actualizarVendedor(nombreEstablecimiento.getText(),direccionEstablecimiento.getText(),Long.parseLong(telefonoEstablecimiento.getText()),this.idEstablecimiento))
+        {
+            JOptionPane.showMessageDialog(null, "Datos modificados");
+        }
+    }//GEN-LAST:event_ButtonAceptActionPerformed
 
     /**
      * @param args the command line arguments

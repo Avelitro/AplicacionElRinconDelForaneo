@@ -75,6 +75,7 @@
             <Property name="text" type="java.lang.String" value="Escribe tu correo electr&#xf3;nico"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfCorreoFocusGained"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCorreoActionPerformed"/>
           </Events>
           <Constraints>
@@ -88,6 +89,7 @@
             <Property name="text" type="java.lang.String" value="2580"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfPasswordFocusGained"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfPasswordActionPerformed"/>
           </Events>
           <Constraints>
@@ -195,6 +197,7 @@
             <Property name="text" type="java.lang.String" value="Escribe tu nombre (s)"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfNombreFocusGained"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfNombreActionPerformed"/>
           </Events>
           <Constraints>
@@ -208,6 +211,7 @@
             <Property name="text" type="java.lang.String" value="Escribe tu apellido materno"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfApellidoMFocusGained"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfApellidoMActionPerformed"/>
           </Events>
           <Constraints>
@@ -273,6 +277,7 @@
             <Property name="text" type="java.lang.String" value="Escribe tu apellido paterno"/>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfApellidoPFocusGained"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfApellidoPActionPerformed"/>
           </Events>
           <Constraints>

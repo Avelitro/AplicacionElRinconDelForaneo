@@ -48,12 +48,11 @@ public class DatabaseConnection {
         } catch (Exception e) {
         }
     }
-    
     public int createUsuario(usuario nUsuario) {
         try {
             mStatement = con.createStatement();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO usuarios (nombres,apellidoPaterno,apellidoMaterno,correo,contraseña,tipoUsuario) VALUES ('" + "','" + nUsuario.getNombres() 
-                    + "','" + nUsuario.getApellidoPaterno()+ "','" + nUsuario.getApellidoMaterno()+ "','" + nUsuario.getCorreo() + "','" + nUsuario.getContrasena() + "','" + nUsuario.getTipoUsuario() + "')",Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO usuarios (nombres,apellidoPaterno,apellidoMaterno,correo,contraseña,tipoUsuario) VALUES ('"  + nUsuario.getNombres() 
+                    + "','" + nUsuario.getApellidoPaterno() + "','" + nUsuario.getApellidoMaterno() + "','" + nUsuario.getCorreo() + "','" + nUsuario.getContrasena() + "','" + nUsuario.getTipoUsuario() + "')",Statement.RETURN_GENERATED_KEYS);
             
             int status = ps.executeUpdate();
 
@@ -69,16 +68,18 @@ public class DatabaseConnection {
         }
         
     }
+    
     //Consulta para crear Establecimiento
-    public Boolean createEstablecimiento(int idUsuario) {
+    public Boolean createEstablecimiento(long idUsuario) {
         try {
             mStatement = con.createStatement();
-            mStatement.execute("INSERT INTO establecimientos VALUES ('','"+idUsuario+"','','','')");
+            mStatement.execute("INSERT INTO establecimientos (idUsuario,nombreEstablecimiento,direccion,telefono) VALUES ('" + idUsuario + "','','','0')");
             return true;
         } catch (SQLException e) {
             System.err.println(e.toString());
             return false;
         }
+        
     }
      public usuario getUsuarioByCorreo(String correo) {
         usuario mUsuario = null;
@@ -236,6 +237,15 @@ public class DatabaseConnection {
             return false;
         }
     }
+    //Actualizar informacion del vendedor
+    public Boolean actualizarVendedor(String nombreEstablecimiento, String direccion, long telefono,long id) {
+        try {
+            mStatement = con.createStatement();
+            mStatement.execute("UPDATE establecimientos set nombreEstablecimiento='"+nombreEstablecimiento+"',direccion='" +direccion+"',telefono='"+telefono+"' WHERE idEstablecimiento='"+id+"' ");
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+            return false;
+        }
+    }
 }
-
-

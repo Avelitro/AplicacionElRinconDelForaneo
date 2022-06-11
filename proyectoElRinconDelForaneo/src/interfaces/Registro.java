@@ -84,6 +84,11 @@ public class Registro extends javax.swing.JDialog {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tfCorreo.setText("Escribe tu correo electrónico");
+        tfCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfCorreoFocusGained(evt);
+            }
+        });
         tfCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCorreoActionPerformed(evt);
@@ -92,6 +97,11 @@ public class Registro extends javax.swing.JDialog {
         jPanel1.add(tfCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 430, -1));
 
         tfPassword.setText("2580");
+        tfPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfPasswordFocusGained(evt);
+            }
+        });
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfPasswordActionPerformed(evt);
@@ -136,6 +146,11 @@ public class Registro extends javax.swing.JDialog {
         jPanel1.add(MensajeNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         tfNombre.setText("Escribe tu nombre (s)");
+        tfNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfNombreFocusGained(evt);
+            }
+        });
         tfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfNombreActionPerformed(evt);
@@ -144,6 +159,11 @@ public class Registro extends javax.swing.JDialog {
         jPanel1.add(tfNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 430, -1));
 
         tfApellidoM.setText("Escribe tu apellido materno");
+        tfApellidoM.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfApellidoMFocusGained(evt);
+            }
+        });
         tfApellidoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfApellidoMActionPerformed(evt);
@@ -168,6 +188,11 @@ public class Registro extends javax.swing.JDialog {
         jPanel1.add(MensajeApellido2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         tfApellidoP.setText("Escribe tu apellido paterno");
+        tfApellidoP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfApellidoPFocusGained(evt);
+            }
+        });
         tfApellidoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfApellidoPActionPerformed(evt);
@@ -246,6 +271,31 @@ public class Registro extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfApellidoPActionPerformed
 
+    private void tfNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfNombreFocusGained
+        // TODO add your handling code here:
+        tfNombre.setText("");
+    }//GEN-LAST:event_tfNombreFocusGained
+
+    private void tfApellidoPFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfApellidoPFocusGained
+        // TODO add your handling code here:
+        tfApellidoP.setText("");
+    }//GEN-LAST:event_tfApellidoPFocusGained
+
+    private void tfApellidoMFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfApellidoMFocusGained
+        // TODO add your handling code here:
+        tfApellidoM.setText("");
+    }//GEN-LAST:event_tfApellidoMFocusGained
+
+    private void tfCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCorreoFocusGained
+        // TODO add your handling code here:
+        tfCorreo.setText("");
+    }//GEN-LAST:event_tfCorreoFocusGained
+
+    private void tfPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfPasswordFocusGained
+        // TODO add your handling code here:
+        tfPassword.setText("");
+    }//GEN-LAST:event_tfPasswordFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -313,13 +363,13 @@ public class Registro extends javax.swing.JDialog {
     { 
         usuario nUsuario = new usuario();
         nUsuario.setIdUsuario(0);
-        nUsuario.setNombres(tfNombre.getText());
+        nUsuario.setNombres(nombre);
         nUsuario.setApellidoPaterno(apellidoP);
         nUsuario.setApellidoMaterno(apellidoM);
-        nUsuario.setCorreo(tfCorreo.getText());
+        nUsuario.setCorreo(correo);
         //Encriptación de la contraseña
-        nUsuario.setContrasena(nUsuario.encriptar(tfPassword.getText()));
-        nUsuario.setTipoUsuario(tfTipoUsuario.getSelectedItem().toString());
+        nUsuario.setContrasena(nUsuario.encriptar(password));
+        nUsuario.setTipoUsuario(tipoUsuario);
         int idUsuario = servicio.createUsuario(nUsuario);
         if( idUsuario != 0)
         {
@@ -330,6 +380,7 @@ public class Registro extends javax.swing.JDialog {
                 }
                 else
                 {
+                    //JOptionPane.showMessageDialog(null, "Error aqui");
                     registroIncorrecto();
                 }
             }
@@ -340,11 +391,12 @@ public class Registro extends javax.swing.JDialog {
         {
             registroIncorrecto();
         }
-        System.out.println("Nombre: "+ nombre);
-        //System.out.println("Apellidos: "+ apellidos);
-        System.out.println("Correo: "+ correo);
-        System.out.println("Password: "+ password);
-        System.out.println("TipoUsuario: "+ tipoUsuario);
+        System.out.println("Nombre: "+ nUsuario.getNombres());
+        System.out.println("ApellidoP: "+ nUsuario.getApellidoPaterno());
+        System.out.println("ApellidoM: "+ nUsuario.getApellidoMaterno());
+        System.out.println("Correo: "+ nUsuario.getCorreo());
+        System.out.println("Password: "+ nUsuario.getContrasena());
+        System.out.println("TipoUsuario: "+ nUsuario.getTipoUsuario());
         
         
     }

@@ -61,9 +61,19 @@ public class Loging extends javax.swing.JDialog {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextCorreo.setText("Ingresa tu correo");
+        jTextCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextCorreoFocusGained(evt);
+            }
+        });
         jPanel2.add(jTextCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 440, -1));
 
         jPasswordReg.setText("Contraseña");
+        jPasswordReg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPasswordRegFocusGained(evt);
+            }
+        });
         jPasswordReg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordRegActionPerformed(evt);
@@ -143,6 +153,16 @@ public class Loging extends javax.swing.JDialog {
         Principal principal = new Principal();
         principal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jTextCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextCorreoFocusGained
+        // TODO add your handling code here:
+        jTextCorreo.setText("");
+    }//GEN-LAST:event_jTextCorreoFocusGained
+
+    private void jPasswordRegFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordRegFocusGained
+        // TODO add your handling code here:
+        jPasswordReg.setText("");
+    }//GEN-LAST:event_jPasswordRegFocusGained
     /**
      * @param args the command line arguments
      */
