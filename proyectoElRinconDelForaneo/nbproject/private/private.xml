@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/InformacionVendedor.java</file>
-            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/HomeVendedor.java</file>
-            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/AgregarPlatillo.java</file>
+            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/entity/Platillos.java</file>
+            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/ListadoPlatillos.java</file>
+            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/PreparedStatement.java</file>
             <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/ActualizarMenu.java</file>
-            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/HomeCliente.java</file>
+            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/Loging.java</file>
             <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/interfaces/Principal.java</file>
-            <file>file:/home/octavio/Documentos/UTM/DSO/AplicacionElRinconDelForaneo/proyectoElRinconDelForaneo/src/clases/DatabaseConnection.java</file>
         </group>
     </open-files>
 </project-private>

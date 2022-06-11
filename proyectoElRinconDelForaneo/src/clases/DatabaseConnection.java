@@ -126,6 +126,7 @@ public class DatabaseConnection {
             return false;
         }
     }
+    
     //Consulta para que nos regresa un establecimiento
     public long getEstablecimientoByUsuario(long idUsuario) {
         long idEstablecimiento=0;
@@ -140,6 +141,7 @@ public class DatabaseConnection {
         }
         return idEstablecimiento;
     }
+    
     public Boolean crearPlatillo(Platillos platillo) {
         int aux=0;
         try {
@@ -152,6 +154,7 @@ public class DatabaseConnection {
             return false;
         }
     }
+    
     public ArrayList<Platillos> recibirPlatillos(long idEstablecimiento){
         ArrayList<Platillos> platillos = new ArrayList<>();   
         System.out.println("Tamaño "+idEstablecimiento);
@@ -161,19 +164,15 @@ public class DatabaseConnection {
             
             while(mResultSet.next()){
                 Platillos platillo = new Platillos();
-                
-                
                 platillo.setIdPlatillo(mResultSet.getLong("idPlatillo"));
                 platillo.setNombrePlatillo(mResultSet.getString("nombrePlatillo"));
-                
                 platillo.setDescripcion(mResultSet.getString("descripcion"));
                 platillo.setPrecio(mResultSet.getFloat("precio"));
                 platillo.setIdEstablecimiento(mResultSet.getLong("idEstablecimiento"));
                 platillo.setValidado(mResultSet.getInt("validado"));
-                //System.out.println("Nombre del Platillo: "+mResultSet.getString("nombrePlatillo"));
                 platillos.add(platillo);
             }
-            //System.out.println("Tamaño"+platillos.size());
+            
             return platillos;
         } catch (SQLException e){
             return null;
@@ -184,7 +183,6 @@ public class DatabaseConnection {
     public boolean modificarMenu(long idPlatillo,int valor){
         //System.out.println("\n"+idPlatillo +"  "+valor);
         try{
-            //mStatement = con.createStatement();
             mStatement.executeUpdate("UPDATE platillos SET validado = ' "+ valor +" ' WHERE platillos.idPlatillo = ' "+idPlatillo+" ' ");
             return true;
         } catch (SQLException e){
@@ -226,4 +224,18 @@ public class DatabaseConnection {
         }
         //return platillos;
     }
+    
+    //Listar platillos
+
+    public boolean eliminarPlatillo(long idPlatillo){
+        try{
+            mStatement.executeUpdate("DELETE FROM platillos WHERE idPlatillo = '" + idPlatillo + "' ");
+            return true;
+       }catch(SQLException e){
+           System.err.println(e.toString());
+            return false;
+        }
+    }
 }
+
+

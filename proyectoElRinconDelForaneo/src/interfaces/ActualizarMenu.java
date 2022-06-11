@@ -20,8 +20,7 @@ import javax.swing.table.TableColumn;
  * @author octavio
  */
 public class ActualizarMenu extends javax.swing.JFrame {
-
-    /**
+    /*
      * Creates new form ActualizarMenu
      */
     ArrayList<Platillos> listPlatillos = new ArrayList<>();
@@ -39,7 +38,6 @@ public class ActualizarMenu extends javax.swing.JFrame {
         PlatillosTabla.setModel(dtm);
         
         if(servicio.Conectar()){
-            //System.out.println("Entre ActualizarMenu"+this.idEstablecimiento);
             listPlatillos = servicio.recibirPlatillos(this.idEstablecimiento);
         }
         else
@@ -88,11 +86,6 @@ public class ActualizarMenu extends javax.swing.JFrame {
     }
     
     public void addCheckBox(JTable table){
-        
-        /*for(int i = 0; i < PlatillosTabla.getRowCount(); i++)
-            if(servicio.marcadorChecbox(listPlatillos.get(i).getIdPlatillo()) == 1)
-                table.setValueAt(true, i, 3);*/
-        
         TableColumn tc = table.getColumnModel().getColumn(3);
         tc.setCellEditor(table.getDefaultEditor(Boolean.class));
         tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));

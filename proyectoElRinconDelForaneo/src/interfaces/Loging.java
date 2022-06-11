@@ -211,6 +211,7 @@ public class Loging extends javax.swing.JDialog {
                     {
                         JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
                         InicioSesion(nUsuario.getTipoUsuario(),nUsuario.getIdUsuario());
+                        //parent.dispose();
                         //this.dispose();
                         //System.out.println(nUsuario.getTipoUsuario());
                         //System.exit(0);
