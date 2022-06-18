@@ -5,13 +5,12 @@
 package interfaces;
 
 import clases.DatabaseConnection;
-import clases.usuario;
+import entity.usuario;
 import clases.validacion;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author octavio
@@ -20,9 +19,10 @@ public class Loging extends javax.swing.JDialog {
 
     /**
      * Creates new form Loging
-     */
+    */
     private DatabaseConnection servicio;
     private validacion mValidacion;
+    
     public Loging(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -30,14 +30,13 @@ public class Loging extends javax.swing.JDialog {
         mValidacion = new validacion();
         this.setLocationRelativeTo(null);
     }
-
-    Loging() {
+    
+    Loging(){
         initComponents();
         servicio = new DatabaseConnection();
         mValidacion = new validacion();
         this.setLocationRelativeTo(null);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,10 +46,9 @@ public class Loging extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        tfCorreo = new javax.swing.JTextField();
-        tfPassword = new javax.swing.JPasswordField();
+        jTextCorreo = new javax.swing.JTextField();
+        jPasswordReg = new javax.swing.JPasswordField();
         jButtonAceptar = new javax.swing.JButton();
         Icono = new javax.swing.JLabel();
         TituloVentana = new javax.swing.JLabel();
@@ -58,47 +56,50 @@ public class Loging extends javax.swing.JDialog {
         LabelCorreo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
-
-        jPanel1.setBackground(new java.awt.Color(1, 88, 255));
 
         jPanel2.setBackground(new java.awt.Color(27, 53, 164));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tfCorreo.setText("Ingresa tu correo");
-        jPanel2.add(tfCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 370, -1));
-
-        tfPassword.setText("Contraseña");
-        tfPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfPasswordActionPerformed(evt);
+        jTextCorreo.setText("Ingresa tu correo");
+        jTextCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextCorreoFocusGained(evt);
             }
         });
-        jPanel2.add(tfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 380, 40));
+        jPanel2.add(jTextCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 440, -1));
+
+        jPasswordReg.setText("Contraseña");
+        jPasswordReg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPasswordRegFocusGained(evt);
+            }
+        });
+        jPasswordReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordRegActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jPasswordReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 440, 40));
 
         jButtonAceptar.setBackground(new java.awt.Color(255, 0, 0));
         jButtonAceptar.setForeground(new java.awt.Color(254, 254, 254));
         jButtonAceptar.setText("ACEPTAR");
         jButtonAceptar.setToolTipText("");
-        jButtonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButtonAceptarMouseClicked(evt);
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 140, -1));
+        jPanel2.add(jButtonAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 140, -1));
 
         Icono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/usuario (1).png"))); // NOI18N
-        jPanel2.add(Icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 410, -1));
+        jPanel2.add(Icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 480, -1));
 
         TituloVentana.setForeground(new java.awt.Color(254, 254, 254));
         TituloVentana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TituloVentana.setText("Iniciar sesión");
-        jPanel2.add(TituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 410, -1));
+        jPanel2.add(TituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 480, -1));
 
         Password.setForeground(new java.awt.Color(254, 254, 254));
         Password.setText("Contraseña");
@@ -108,67 +109,33 @@ public class Loging extends javax.swing.JDialog {
         LabelCorreo.setText("Correo");
         jPanel2.add(LabelCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPasswordActionPerformed
+    private void jPasswordRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordRegActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfPasswordActionPerformed
+    }//GEN-LAST:event_jPasswordRegActionPerformed
 
-    private void jButtonAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAceptarMouseClicked
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
-        usuario nUsuario = new usuario();
-        String Pasword = "";
-        if(!tfCorreo.getText().equals("") && !tfPassword.getText().equals("")){
-            if (mValidacion.ValidarEmail(tfCorreo.getText().trim())) {
+        //enviarDatosUsuario()
+        
+        if(!jTextCorreo.getText().equals("") && !jPasswordReg.getText().equals("")){
+            if (mValidacion.ValidarEmail(jTextCorreo.getText().trim())) {
                 if (servicio.Conectar()) { 
-                   nUsuario = servicio.getUsuarioByCorreo(tfCorreo.getText());
-                    Pasword = nUsuario.encriptar(tfPassword.getText());
-                    if(!(nUsuario == null))
-                    {
-                        if (Pasword.equals(nUsuario.getContrasena())) 
-                        {
-                            JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
-                            //this.dispose();
-                            if (!"Cliente".equals(nUsuario.getTipoUsuario())) {
-                                HomeVendedor menuVendedor = new HomeVendedor();
-                                menuVendedor.setVisible(true);
-                                this.dispose();
-                            } else {
-                                HomeCliente menuCliente = new HomeCliente();
-                                menuCliente.setVisible(true);
-                                this.dispose();
-                            }
-                            System.out.println(nUsuario.getTipoUsuario());
-                            //System.exit(0);
-                        }else {
-                            JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
-                        }
-                    }else {
-                        JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta");
-                    }
+                    enviarDatosUsuarios(jTextCorreo.getText());
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Error al conectar");
                 }
@@ -178,14 +145,24 @@ public class Loging extends javax.swing.JDialog {
         }else{
             JOptionPane.showMessageDialog(null, "Ingrese el usuario y contraseña");
         }
-    }//GEN-LAST:event_jButtonAceptarMouseClicked
 
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         Principal principal = new Principal();
         principal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void jTextCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextCorreoFocusGained
+        // TODO add your handling code here:
+        jTextCorreo.setText("");
+    }//GEN-LAST:event_jTextCorreoFocusGained
+
+    private void jPasswordRegFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordRegFocusGained
+        // TODO add your handling code here:
+        jPasswordReg.setText("");
+    }//GEN-LAST:event_jPasswordRegFocusGained
     /**
      * @param args the command line arguments
      */
@@ -212,12 +189,20 @@ public class Loging extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(Loging.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Loging dialog = new Loging(new javax.swing.JFrame(), true);
-                
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
                 dialog.setVisible(true);
             }
         });
@@ -229,9 +214,48 @@ public class Loging extends javax.swing.JDialog {
     private javax.swing.JLabel Password;
     private javax.swing.JLabel TituloVentana;
     private javax.swing.JButton jButtonAceptar;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tfCorreo;
-    private javax.swing.JPasswordField tfPassword;
+    private javax.swing.JPasswordField jPasswordReg;
+    private javax.swing.JTextField jTextCorreo;
     // End of variables declaration//GEN-END:variables
+    private void enviarDatosUsuarios(String Correo)
+    {
+        usuario nUsuario = new usuario();
+        String Pasword = "";
+        nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
+        //System.out.println("Investigar:"+nUsuario.getCorreo());
+        Pasword = nUsuario.encriptar(jPasswordReg.getText());
+        if(!(nUsuario == null))
+            {
+                if (Pasword.equals(nUsuario.getContrasena())) 
+                    {
+                        JOptionPane.showMessageDialog(null, "Bienvenido al sistema");
+                        InicioSesion(nUsuario.getTipoUsuario(),nUsuario.getIdUsuario());
+                        //parent.dispose();
+                        //this.dispose();
+                        //System.out.println(nUsuario.getTipoUsuario());
+                        //System.exit(0);
+                        }else {
+                            datosIncorrectos();
+                        }
+                    }else {
+                        datosIncorrectos();
+                    }
+    }
+    private void InicioSesion(String tipoUsuario,long idUsuario)
+    {
+        if (!"Cliente".equals(tipoUsuario)) {
+            HomeVendedor menuVendedor = new HomeVendedor(idUsuario);
+            menuVendedor.setVisible(true);
+            this.dispose();
+        } else {
+            HomeCliente menuCliente = new HomeCliente();
+            menuCliente.setVisible(true);
+            this.dispose();
+        }
+    }
+    
+    private void datosIncorrectos(){
+        JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
+    }
 }

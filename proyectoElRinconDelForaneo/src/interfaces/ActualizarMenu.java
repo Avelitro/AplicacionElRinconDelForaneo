@@ -3,24 +3,115 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaces;
-
+import entity.Platillos;
 import javax.swing.JPanel;
+import clases.DatabaseConnection;
+import java.awt.Color;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
  * @author octavio
  */
 public class ActualizarMenu extends javax.swing.JFrame {
-
-    /**
+    /*
      * Creates new form ActualizarMenu
      */
-    public ActualizarMenu() {
+    ArrayList<Platillos> listPlatillos = new ArrayList<>();
+    ArrayList<Integer> listSelect = new ArrayList<>();
+    DatabaseConnection servicio;
+    private long idEstablecimiento;
+    DefaultTableModel dtm = new DefaultTableModel();
+                
+    public ActualizarMenu(long idEstablecimiento) {
         initComponents();
+        this.idEstablecimiento = idEstablecimiento;
+        servicio = new DatabaseConnection();
+        String[] titulo = new String[]{"Nombre del platillo","Descripción","Precio","Selección"};
+        dtm.setColumnIdentifiers(titulo);
+        PlatillosTabla.setModel(dtm);
+        
+        if(servicio.Conectar()){
+            listPlatillos = servicio.recibirPlatillos(this.idEstablecimiento);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Error al conectar");            
+        
+        for(Platillos reco:listPlatillos)
+            listarPlatillo(reco);
+        
+        addCheckBox(PlatillosTabla);
+        
+        PlatillosTabla.setDefaultRenderer (Object.class, new MiRender());
     }
     
+    public class MiRender extends DefaultTableCellRenderer{
+        @Override
+        public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column){
+ 
+            super.getTableCellRendererComponent (table, value, isSelected, hasFocus, row, 3);
+            if ( servicio.marcadorChecbox(listPlatillos.get(row).getIdPlatillo()) == 1 ){
+               this.setOpaque(true);
+               this.setBackground(Color.RED);
+               this.setForeground(Color.YELLOW);
+            } else {
+               this.setOpaque(true);
+               this.setBackground(Color.BLACK);
+               this.setForeground(Color.WHITE);
+            }
+            return this;
+        }
+    }
+    //Constructor vacio
+    public ActualizarMenu() {
+        initComponents();
+        servicio = new DatabaseConnection();
+    }
     public JPanel getFondo() {
         return Background ;
+    }
+    
+    public void listarPlatillo(Platillos platillo){
+       dtm.addRow(new Object[]{
+           platillo.getNombrePlatillo(), platillo.getDescripcion(), String.valueOf(platillo.getPrecio())
+       });
+    }
+    
+    public void addCheckBox(JTable table){
+        TableColumn tc = table.getColumnModel().getColumn(3);
+        tc.setCellEditor(table.getDefaultEditor(Boolean.class));
+        tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+         
+    }
+    
+    public boolean IsSelected(int row, int column, JTable table){    
+        return table.getValueAt(row, column) != null;                       
+    }
+    
+    public void marcaError(){
+        JOptionPane.showMessageDialog(null, "No hay platillos disponibles");
+    }
+    
+    public void modificarMenu(){
+        if(PlatillosTabla.getRowCount() > 0)
+            for(int i = 0; i < PlatillosTabla.getRowCount();i++){
+                if  (IsSelected(i, 3, PlatillosTabla)){
+                    System.out.println("col: " + i);
+                    servicio.modificarMenu(listPlatillos.get(i).getIdPlatillo(),1);
+                }
+                    
+                else
+                    servicio.modificarMenu(listPlatillos.get(i).getIdPlatillo(),0);
+            }
+ 
+        else
+            marcaError();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,11 +123,11 @@ public class ActualizarMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         Background = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        PlatillosTabla = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,12 +136,9 @@ public class ActualizarMenu extends javax.swing.JFrame {
         Background.setMinimumSize(new java.awt.Dimension(480, 480));
         Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, 1000, 80));
-
         jLabel2.setForeground(new java.awt.Color(254, 254, 254));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Actualizar platillo");
+        jLabel2.setText("Actualizar menú");
         Background.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 1000, -1));
 
         jToggleButton1.setBackground(new java.awt.Color(255, 0, 3));
@@ -63,30 +151,16 @@ public class ActualizarMenu extends javax.swing.JFrame {
         });
         Background.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 120, -1));
 
-        jTable1.setBackground(new java.awt.Color(4, 2, 2));
-        jTable1.setForeground(new java.awt.Color(254, 254, 254));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre del platillo", "Descripción", "Precio", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
+        PlatillosTabla.setBackground(new java.awt.Color(4, 2, 2));
+        PlatillosTabla.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        PlatillosTabla.setForeground(new java.awt.Color(254, 254, 254));
+        jScrollPane1.setViewportView(PlatillosTabla);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+        Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1000, 230));
 
-        Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1000, 100));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/platoReservar.png"))); // NOI18N
+        Background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, 1000, 80));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +178,8 @@ public class ActualizarMenu extends javax.swing.JFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
+        modificarMenu();
+        JOptionPane.showMessageDialog(null, "El meú se ha actualizado");
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
@@ -143,10 +219,10 @@ public class ActualizarMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
+    private javax.swing.JTable PlatillosTabla;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

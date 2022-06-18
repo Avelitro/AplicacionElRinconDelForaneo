@@ -4,7 +4,14 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import entity.Platillos;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -15,8 +22,61 @@ public class ListadoPlatillos extends javax.swing.JFrame {
     /**
      * Creates new form ListadoPlatillos
      */
+    ArrayList<Platillos> listPlatillos = new ArrayList<>();
+    ArrayList<Integer> listSelect = new ArrayList<>();
+    DatabaseConnection servicio;
+    private long idEstablecimiento;
+    DefaultTableModel dtm = new DefaultTableModel();
+    
     public ListadoPlatillos() {
         initComponents();
+        servicio = new DatabaseConnection();
+    }
+    
+    public ListadoPlatillos(long idEstablecimiento) {
+        initComponents();
+        this.idEstablecimiento = idEstablecimiento;
+        listarPlatillo(this.idEstablecimiento);
+    }
+    
+    private void listarPlatillo(long idEstablecimiento){
+        servicio = new DatabaseConnection();
+        String[] titulo = new String[]{"Nombre del platillo","Descripción","Precio","Eliminar"};
+        dtm.setColumnIdentifiers(titulo);
+        TablaPlatillos.setModel(dtm);
+        
+        if(servicio.Conectar()){
+            listPlatillos = servicio.recibirPlatillos(idEstablecimiento);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Error al conectar");            
+        
+        for(Platillos reco:listPlatillos)
+            mostrarPlatillo(reco);
+        
+        addCheckBox(TablaPlatillos);
+    }
+    
+    public void mostrarPlatillo(Platillos platillo){
+       dtm.addRow(new Object[]{
+           platillo.getNombrePlatillo(), platillo.getDescripcion(), String.valueOf(platillo.getPrecio())
+       });
+    }
+    
+    public void addCheckBox(JTable table){
+        TableColumn tc = table.getColumnModel().getColumn(3);
+        tc.setCellEditor(table.getDefaultEditor(Boolean.class));
+        tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+    }
+    
+    public void eliminarPlatillo(){
+        for(int i = 0; i < TablaPlatillos.getRowCount();i++)
+                if  (IsSelected(i, 3, TablaPlatillos))
+                    servicio.eliminarPlatillo(listPlatillos.get(i).getIdPlatillo());   
+    }
+    
+    public boolean IsSelected(int row, int column, JTable table){    
+        return table.getValueAt(row, column) != null;                       
     }
     
     public JPanel getFondo() {
@@ -34,9 +94,12 @@ public class ListadoPlatillos extends javax.swing.JFrame {
         Background = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaPlatillos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(27, 53, 164));
 
+        Background.setBackground(new java.awt.Color(27, 53, 164));
         Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -51,25 +114,36 @@ public class ListadoPlatillos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(TablaPlatillos);
 
-        Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 480));
+        Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 990, 390));
+
+        jButton1.setBackground(new java.awt.Color(255, 0, 18));
+        jButton1.setForeground(new java.awt.Color(254, 254, 254));
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        Background.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, 1030, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        eliminarPlatillo();
+        JOptionPane.showMessageDialog(null, "Platillos eliminados");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,6 +183,7 @@ public class ListadoPlatillos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JTable TablaPlatillos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,9 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import entity.Platillos;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -15,14 +18,21 @@ public class AgregarPlatillos extends javax.swing.JFrame {
     /**
      * Creates new form AgregarPlatillos
      */
+    private DatabaseConnection servicio;
+    private long idEstablecimiento;
+    public AgregarPlatillos(long idEstablecimiento) {
+        initComponents();
+        this.idEstablecimiento = idEstablecimiento;
+        servicio = new DatabaseConnection();
+    }
     public AgregarPlatillos() {
         initComponents();
+        servicio = new DatabaseConnection();
     }
     
       public JPanel getFondo() {
         return Background ;
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,10 +44,10 @@ public class AgregarPlatillos extends javax.swing.JFrame {
 
         Background = new javax.swing.JPanel();
         Signo = new javax.swing.JLabel();
-        jTextPrecio = new javax.swing.JTextField();
-        jTextNombre = new javax.swing.JTextField();
+        tfPrecio = new javax.swing.JTextField();
+        tfNombrePlatillo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        tfDescripcion = new javax.swing.JTextArea();
         label2 = new java.awt.Label();
         buttonAgregar = new java.awt.Button();
         label3 = new java.awt.Label();
@@ -55,30 +65,30 @@ public class AgregarPlatillos extends javax.swing.JFrame {
         Signo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         Signo.setForeground(new java.awt.Color(254, 254, 254));
         Signo.setText("$");
-        Background.add(Signo, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 170, 20, 30));
+        Background.add(Signo, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 160, 20, 50));
 
-        jTextPrecio.setBackground(new java.awt.Color(1, 1, 1));
-        jTextPrecio.setForeground(new java.awt.Color(254, 254, 254));
-        jTextPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextPrecio.setText("Precio");
-        jTextPrecio.addActionListener(new java.awt.event.ActionListener() {
+        tfPrecio.setBackground(new java.awt.Color(1, 1, 1));
+        tfPrecio.setForeground(new java.awt.Color(254, 254, 254));
+        tfPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfPrecio.setText("Precio");
+        tfPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextPrecioActionPerformed(evt);
+                tfPrecioActionPerformed(evt);
             }
         });
-        Background.add(jTextPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 170, 110, 30));
+        Background.add(tfPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 160, 110, 50));
 
-        jTextNombre.setText("Escribe el nombre del platillo");
-        jTextNombre.addActionListener(new java.awt.event.ActionListener() {
+        tfNombrePlatillo.setText("Escribe el nombre del platillo");
+        tfNombrePlatillo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNombreActionPerformed(evt);
+                tfNombrePlatilloActionPerformed(evt);
             }
         });
-        Background.add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 520, 50));
+        Background.add(tfNombrePlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 400, 50));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        tfDescripcion.setColumns(20);
+        tfDescripcion.setRows(5);
+        jScrollPane1.setViewportView(tfDescripcion);
 
         Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 520, 120));
 
@@ -89,6 +99,11 @@ public class AgregarPlatillos extends javax.swing.JFrame {
         buttonAgregar.setBackground(new java.awt.Color(255, 0, 0));
         buttonAgregar.setForeground(new java.awt.Color(254, 254, 254));
         buttonAgregar.setLabel("Agregar");
+        buttonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAgregarActionPerformed(evt);
+            }
+        });
         Background.add(buttonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 90, 30));
 
         label3.setForeground(new java.awt.Color(254, 254, 254));
@@ -118,13 +133,30 @@ public class AgregarPlatillos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPrecioActionPerformed
+    private void tfPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPrecioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextPrecioActionPerformed
+    }//GEN-LAST:event_tfPrecioActionPerformed
 
-    private void jTextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreActionPerformed
+    private void tfNombrePlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombrePlatilloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextNombreActionPerformed
+    }//GEN-LAST:event_tfNombrePlatilloActionPerformed
+
+    private void buttonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAgregarActionPerformed
+        // TODO add your handling code here:
+        System.out.println(tfDescripcion.getText());
+        if(tfNombrePlatillo.getText().equals("") || tfDescripcion.getText().equals("") || tfPrecio.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Llene todos los campos.");
+        }
+        else{
+            if(servicio.Conectar()){
+                nuevoPlatillo(tfNombrePlatillo.getText(),Float.parseFloat(tfPrecio.getText()),tfDescripcion.getText());
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Error al conectarse a la base de datos.");
+            }
+            servicio.Desconectar();
+        }
+    }//GEN-LAST:event_buttonAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,10 +200,36 @@ public class AgregarPlatillos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextNombre;
-    private javax.swing.JTextField jTextPrecio;
     private java.awt.Label label2;
     private java.awt.Label label3;
+    private javax.swing.JTextArea tfDescripcion;
+    private javax.swing.JTextField tfNombrePlatillo;
+    private javax.swing.JTextField tfPrecio;
     // End of variables declaration//GEN-END:variables
+    public void nuevoPlatillo(String nombrePlatillo,float Precio,String Descripcion)
+    { 
+        Platillos platillo = new Platillos(servicio);
+        platillo.setIdPlatillo(0);
+        platillo.setNombrePlatillo(nombrePlatillo);
+        platillo.setPrecio(Precio);
+        platillo.setDescripcion(Descripcion);
+        platillo.setIdEstablecimiento(idEstablecimiento);
+        if(platillo.crearPlatillo(platillo))
+        {
+            nuevoPlatillo();
+        }
+        else
+        {
+            marcaError();
+        }
+    }
+    private void nuevoPlatillo()
+    {
+        JOptionPane.showMessageDialog(null, "Platillo Creado Correctamente.");
+        //this.dispose();
+    }
+    private void marcaError()
+    {
+        JOptionPane.showMessageDialog(null, "¡ERROR! El platillo no se pudo crear.");
+    }
 }

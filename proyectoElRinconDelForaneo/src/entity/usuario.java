@@ -1,5 +1,6 @@
-package clases;
+package entity;
 
+import clases.*;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import javax.crypto.Cipher;
@@ -51,13 +52,15 @@ public class usuario {
         return apellidoPaterno;
     }
 
+
     public void setApellidoPaterno(String apellidoPaterno) {
         this.apellidoPaterno = apellidoPaterno;
     }
-
+    
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
+
 
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;

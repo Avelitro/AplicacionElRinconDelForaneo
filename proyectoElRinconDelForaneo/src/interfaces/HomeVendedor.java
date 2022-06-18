@@ -4,8 +4,11 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import clases.validacion;
 import javax.swing.JPanel;
-
+import entity.Platillos;
+import javax.swing.JOptionPane;
 /**
  *
  * @author octavio
@@ -15,6 +18,26 @@ public class HomeVendedor extends javax.swing.JFrame {
     /**
      * Creates new form HomeVendedor
      */
+    long idEstablecimiento;
+    long idUsuario;
+    private DatabaseConnection servicio;
+    public HomeVendedor(long idUsuario) {
+        initComponents();
+        this.idUsuario = idUsuario;
+        System.out.println("idUsuario: "+this.idUsuario);
+        servicio = new DatabaseConnection();
+        if(servicio.Conectar()){
+                this.idEstablecimiento = servicio.getEstablecimientoByUsuario(this.idUsuario);
+                System.out.println("idEstablecimiento: "+ this.idEstablecimiento);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Error al conectarse a la base de datos.");
+            }
+            servicio.Desconectar();
+        
+        ListadoPlatillos listado = new ListadoPlatillos(this.idEstablecimiento);
+        MostrarPanel(listado.getFondo());
+    }
     public HomeVendedor() {
         initComponents();
         
@@ -30,7 +53,17 @@ public class HomeVendedor extends javax.swing.JFrame {
         Content.revalidate();
         Content.repaint();
     }
-
+    /*public void listarPlatillo()
+    {
+        platillo nPlatillo=new platillo();
+        if(servicio.Conectar())
+        {
+          nPlatillo=servicio.getPlatillosByEstablecimiento(1);
+            System.out.println("PLATILLO: "+nPlatillo);  
+        }
+        
+        
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,6 +104,11 @@ public class HomeVendedor extends javax.swing.JFrame {
         Salida.setText("Salir");
         Salida.setBorderPainted(false);
         Salida.setContentAreaFilled(false);
+        Salida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SalidaMouseClicked(evt);
+            }
+        });
         Salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalidaActionPerformed(evt);
@@ -157,24 +195,32 @@ public class HomeVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_SalidaActionPerformed
 
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
-        AgregarPlatillos platillos = new AgregarPlatillos ();
+        AgregarPlatillos platillos = new AgregarPlatillos (this.idEstablecimiento);
         MostrarPanel (platillos.getFondo());
     }//GEN-LAST:event_BtnAgregarActionPerformed
 
     private void BtnInformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInformacionActionPerformed
-        InformacionVendedor informacion = new InformacionVendedor();
+        InformacionVendedor informacion = new InformacionVendedor(this.idEstablecimiento);
         MostrarPanel (informacion.getFondo());
     }//GEN-LAST:event_BtnInformacionActionPerformed
 
     private void BtnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnListarActionPerformed
-        ListadoPlatillos listado = new ListadoPlatillos();
+        ListadoPlatillos listado = new ListadoPlatillos(this.idEstablecimiento);
         MostrarPanel(listado.getFondo());
     }//GEN-LAST:event_BtnListarActionPerformed
 
     private void BtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizarActionPerformed
-        ActualizarMenu menu = new ActualizarMenu();
+        ActualizarMenu menu = new ActualizarMenu(this.idEstablecimiento);
         MostrarPanel(menu.getFondo());
     }//GEN-LAST:event_BtnActualizarActionPerformed
+
+    private void SalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalidaMouseClicked
+        // TODO add your handling code here:
+        //Salida
+        Principal principal = new Principal();
+        principal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalidaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -209,6 +255,7 @@ public class HomeVendedor extends javax.swing.JFrame {
                 new HomeVendedor().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -223,4 +270,5 @@ public class HomeVendedor extends javax.swing.JFrame {
     private javax.swing.JLabel Usuario;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+    //public void 
 }
