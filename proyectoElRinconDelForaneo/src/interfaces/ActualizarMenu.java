@@ -44,7 +44,7 @@ public class ActualizarMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al conectar");            
         
         for(Platillos reco:listPlatillos)
-            mostrarPlatillo(reco);
+            listarPlatillo(reco);
         
         addCheckBox(PlatillosTabla);
         
@@ -65,11 +65,9 @@ public class ActualizarMenu extends javax.swing.JFrame {
                this.setBackground(Color.BLACK);
                this.setForeground(Color.WHITE);
             }
-
             return this;
         }
     }
-    
     //Constructor vacio
     public ActualizarMenu() {
         initComponents();
@@ -79,7 +77,7 @@ public class ActualizarMenu extends javax.swing.JFrame {
         return Background ;
     }
     
-    public void mostrarPlatillo(Platillos platillo){
+    public void listarPlatillo(Platillos platillo){
        dtm.addRow(new Object[]{
            platillo.getNombrePlatillo(), platillo.getDescripcion(), String.valueOf(platillo.getPrecio())
        });

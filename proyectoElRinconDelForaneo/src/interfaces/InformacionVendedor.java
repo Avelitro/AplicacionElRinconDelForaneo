@@ -37,9 +37,6 @@ public class InformacionVendedor extends javax.swing.JFrame {
         servicio = new DatabaseConnection();
         if(servicio.Conectar()){
             Establecimiento = servicio.getEstablecimiento(idEstablecimiento);
-            /*System.out.println("NombreEstablecimiento: "+Establecimiento.get(0));
-            System.out.println("Direccion: "+Establecimiento.get(1));
-            System.out.println("Telefono: "+Establecimiento.get(2));*/
             nombreEstablecimiento.setText(Establecimiento.get(0));
             direccionEstablecimiento.setText(Establecimiento.get(1));
             telefonoEstablecimiento.setText(Establecimiento.get(2));
@@ -49,7 +46,13 @@ public class InformacionVendedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al conectar");
         }   
     }
-    
+    public void guardarInfo(String nombreEstablecimiento, String direccion, String telefono)
+    {
+        if(servicio.actualizarVendedor(nombreEstablecimiento,direccion,Long.parseLong(telefono),this.idEstablecimiento))
+        {
+            JOptionPane.showMessageDialog(null, "Datos modificados");
+        }
+    }
      public JPanel getFondo() {
         return Background ;
     }
@@ -139,13 +142,7 @@ public class InformacionVendedor extends javax.swing.JFrame {
 
     private void ButtonAceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptActionPerformed
         // TODO add your handling code here:
-        nombreEstablecimiento.getText();
-        direccionEstablecimiento.getText();
-        telefonoEstablecimiento.getText();
-        if(servicio.actualizarVendedor(nombreEstablecimiento.getText(),direccionEstablecimiento.getText(),Long.parseLong(telefonoEstablecimiento.getText()),this.idEstablecimiento))
-        {
-            JOptionPane.showMessageDialog(null, "Datos modificados");
-        }
+        guardarInfo(nombreEstablecimiento.getText(),direccionEstablecimiento.getText(),telefonoEstablecimiento.getText());
     }//GEN-LAST:event_ButtonAceptActionPerformed
 
     /**
