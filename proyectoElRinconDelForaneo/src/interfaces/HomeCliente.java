@@ -13,7 +13,12 @@ public class HomeCliente extends javax.swing.JFrame {
     /**
      * Creates new form P_HomeCliente
      */
+    private long idUsuario;
     public HomeCliente() {
+        initComponents();
+    }
+    public HomeCliente(long idUsuario) {
+        this.idUsuario = idUsuario;
         initComponents();
     }
 

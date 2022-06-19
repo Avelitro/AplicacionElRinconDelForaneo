@@ -23,11 +23,10 @@ public class AgregarPlatillos extends javax.swing.JFrame {
     public AgregarPlatillos(long idEstablecimiento) {
         initComponents();
         this.idEstablecimiento = idEstablecimiento;
-        servicio = new DatabaseConnection();
+        this.servicio = new DatabaseConnection();
     }
     public AgregarPlatillos() {
         initComponents();
-        servicio = new DatabaseConnection();
     }
     
       public JPanel getFondo() {

@@ -224,9 +224,9 @@ public class Loging extends javax.swing.JDialog {
         String Pasword = "";
         nUsuario = servicio.getUsuarioByCorreo(jTextCorreo.getText());
         //System.out.println("Investigar:"+nUsuario.getCorreo());
-        Pasword = nUsuario.encriptar(jPasswordReg.getText());
         if(!(nUsuario == null))
             {
+                Pasword = nUsuario.encriptar(jPasswordReg.getText());
                 if (Pasword.equals(nUsuario.getContrasena())) 
                     {
                         JOptionPane.showMessageDialog(null, "Bienvenido al sistema");

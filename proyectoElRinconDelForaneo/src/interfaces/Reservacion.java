@@ -4,7 +4,17 @@
  */
 package interfaces;
 
+import clases.DatabaseConnection;
+import entity.Platillos;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -15,11 +25,90 @@ public class Reservacion extends javax.swing.JDialog {
     /**
      * Creates new form Reservacion
      */
-    public Reservacion(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    ArrayList<Platillos> listPlatillos = new ArrayList<>();
+    ArrayList<Integer> listSelect = new ArrayList<>();
+    private DatabaseConnection servicio;
+    private long idEstablecimiento;
+    private long idUsuario;
+    DefaultTableModel dtm = new DefaultTableModel();
+    private boolean[] editable = {false,false,false,true,true};
+    
+    // Constructor vacio
+    public Reservacion() {
         initComponents();
+        this.idEstablecimiento = 6;
+        this.idUsuario = 14;
+        this.servicio = new DatabaseConnection();
+        
+        dtm = new DefaultTableModel(new String[]{"Nombre del platillo","Descripción","Precio","Cantidad","Selección"}, 0) {
+ 
+            Class[] types = new Class[]{
+                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Integer.class,java.lang.Boolean.class
+            };
+ 
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+            public boolean isCellEditable(int row, int column){
+                return editable[column];
+            }
+        };
+        PlatillosTabla.setModel(dtm);
+        
+        if(servicio.Conectar()){
+            listPlatillos = servicio.listarPlatillosValidos(this.idEstablecimiento);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Error al conectar");
+        for(Platillos reco:listPlatillos)
+            listarPlatillo(reco);
+        
     }
-
+    
+    public Reservacion(long idEstablecimiento,long idUsuario) {
+        initComponents();
+        this.idEstablecimiento = idEstablecimiento;
+        this.idUsuario = idUsuario;
+        this.servicio = new DatabaseConnection();
+        
+        dtm = new DefaultTableModel(new String[]{"Nombre del platillo","Descripción","Precio","Cantidad","Selección"}, 0) {
+ 
+            Class[] types = new Class[]{
+                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Integer.class,java.lang.Boolean.class
+            };
+ 
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+            public boolean isCellEditable(int row, int column){
+                return editable[column];
+            }
+        };
+        
+        PlatillosTabla.setModel(dtm);
+        
+        if(servicio.Conectar()){
+            listPlatillos = servicio.listarPlatillosValidos(this.idEstablecimiento);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Error al conectar");            
+        servicio.Desconectar();
+        for(Platillos reco:listPlatillos)
+            listarPlatillo(reco);
+        
+        
+    }
+    
+    public void listarPlatillo(Platillos platillo){
+        Object fila[] = new Object[5];
+        fila[0] = platillo.getNombrePlatillo();
+        fila[1] = platillo.getDescripcion();
+        fila[2] = String.valueOf(platillo.getPrecio());
+        fila[3] = 1;
+        fila[4] = false;
+        dtm.addRow(fila);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +124,7 @@ public class Reservacion extends javax.swing.JDialog {
         Icono = new javax.swing.JLabel();
         TituloVentana = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        PlatillosTabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,28 +162,18 @@ public class Reservacion extends javax.swing.JDialog {
         TituloVentana.setText("Reservación de platillo");
         jPanel2.add(TituloVentana, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 670, -1));
 
-        jTable1.setBackground(new java.awt.Color(11, 7, 7));
-        jTable1.setForeground(new java.awt.Color(254, 254, 254));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        PlatillosTabla.setBackground(new java.awt.Color(11, 7, 7));
+        PlatillosTabla.setForeground(new java.awt.Color(254, 254, 254));
+        PlatillosTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Nombre del platillo", "Descripción", "Precio", "Cantidad", "Selección"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Boolean.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
-        jScrollPane1.setViewportView(jTable1);
+        ));
+        PlatillosTabla.setToolTipText("");
+        jScrollPane1.setViewportView(PlatillosTabla);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 680, 100));
 
@@ -115,13 +194,15 @@ public class Reservacion extends javax.swing.JDialog {
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         String [] opciones = {"Cancelar","Aceptar"};
         int opcion = JOptionPane.showOptionDialog(null, "¿Estás seguro?", "Reservación", 0, JOptionPane.QUESTION_MESSAGE , null, opciones, "");
-        System.out.println("La opción elegida fue: " + opcion);
-        System.out.println("La opción elegida fue: " + opciones[opcion]);
+        
+        if(opcion == 1)
+            reservacion();
 
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     /**
@@ -154,25 +235,80 @@ public class Reservacion extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Reservacion dialog = new Reservacion(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new Reservacion().setVisible(true);
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Icono;
+    private javax.swing.JTable PlatillosTabla;
     private javax.swing.JLabel TituloVentana;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+    
+    public void reservacion() {
+        boolean selecciono = false;
+        String aux;
+        int cantidad,error = 0;
+        if(PlatillosTabla.getRowCount() > 0)
+            for(int i = 0; i < PlatillosTabla.getRowCount();i++){
+                System.out.println("i: " + i);
+                if(IsSelected(i, 4, PlatillosTabla)){
+                    cantidad = (int) PlatillosTabla.getValueAt(i, 3);
+                    System.out.println("cantidad : " + cantidad);
+                    if(cantidad < 1 || cantidad > 5){
+                        selecciono = false;
+                        error = 1;
+                        break;
+                    }
+                        selecciono = true;
+                }
+            }
+        if(selecciono){
+            String banco = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            String token = "";
+            do {
+            token = "";
+            for (int x = 0; x < 7; x++) {
+                int indiceAleatorio = numeroAleatorioEnRango(0, banco.length() - 1);
+                char caracterAleatorio = banco.charAt(indiceAleatorio);
+                token += caracterAleatorio;
+            }
+            System.out.println("token: " + token);
+            } while (servicio.existeToken(token));
+            enviarDatosReservacion(token);
+        }
+        else
+            marcaError(error);
+    }
+    public void enviarDatosReservacion(String token){
+        long idReservacion = servicio.createReservacion(this.idUsuario,token), idPlatillo;
+        int cantidad;
+        for(int i = 0; i < PlatillosTabla.getRowCount();i++){
+            if(IsSelected(i, 4, PlatillosTabla)){
+                System.out.println("col: " + i);
+                System.out.println("Cantidad : " + PlatillosTabla.getValueAt(i, 3));
+                idPlatillo = listPlatillos.get(i).getIdPlatillo();
+                cantidad = (int) PlatillosTabla.getValueAt(i, 3);
+                servicio.createReservacionPlatillo(idReservacion,idPlatillo,cantidad);
+            }
+        }
+        
+    }
+    public static int numeroAleatorioEnRango(int minimo, int maximo) {
+        return ThreadLocalRandom.current().nextInt(minimo, maximo + 1);
+    }
+    public boolean IsSelected(int row, int column, JTable table){
+        return (boolean)table.getValueAt(row, column);                       
+    }
+    public void marcaError(int error){
+        if(error == 0)
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ningún platillo.", "¡Seleccione algún platillo!", JOptionPane.ERROR_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null, "El limite de reserva es 5 por platillo.","¡Exediste el número de platillo!",JOptionPane.ERROR_MESSAGE);
+    }
 }

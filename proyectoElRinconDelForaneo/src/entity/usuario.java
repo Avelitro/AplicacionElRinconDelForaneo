@@ -104,7 +104,7 @@ public class usuario {
             byte[] base64Bytes = Base64.encodeBase64(buf);
             encriptacion = new String(base64Bytes);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "AError al encriptar");
+            JOptionPane.showMessageDialog(null, "Error al encriptar");
         }
         return encriptacion;
     }
@@ -123,7 +123,7 @@ public class usuario {
             desencriptacion = new String(plainText, "UTF-8");
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "error al desencriptar");
+            JOptionPane.showMessageDialog(null, "Error al desencriptar");
         }
         return desencriptacion;
     }

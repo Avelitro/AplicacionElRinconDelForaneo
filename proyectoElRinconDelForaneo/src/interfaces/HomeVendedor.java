@@ -18,14 +18,14 @@ public class HomeVendedor extends javax.swing.JFrame {
     /**
      * Creates new form HomeVendedor
      */
-    long idEstablecimiento;
-    long idUsuario;
+    private long idEstablecimiento;
+    private long idUsuario;
     private DatabaseConnection servicio;
     public HomeVendedor(long idUsuario) {
         initComponents();
         this.idUsuario = idUsuario;
         System.out.println("idUsuario: "+this.idUsuario);
-        servicio = new DatabaseConnection();
+        this.servicio = new DatabaseConnection();
         if(servicio.Conectar()){
                 this.idEstablecimiento = servicio.getEstablecimientoByUsuario(this.idUsuario);
                 System.out.println("idEstablecimiento: "+ this.idEstablecimiento);

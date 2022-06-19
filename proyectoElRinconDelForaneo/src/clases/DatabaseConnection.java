@@ -248,4 +248,70 @@ public class DatabaseConnection {
             return false;
         }
     }
+    
+    // Listar platillos que son validos de un establecimiento
+    public ArrayList<Platillos> listarPlatillosValidos(long idEstablecimiento){
+        ArrayList<Platillos> platillos = new ArrayList<>();   
+        System.out.println("Tamaño "+idEstablecimiento);
+        try{
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT * FROM platillos WHERE idEstablecimiento = '" + idEstablecimiento + "' ");
+            
+            while(mResultSet.next()){
+                Platillos platillo = new Platillos();
+                platillo.setIdPlatillo(mResultSet.getLong("idPlatillo"));
+                platillo.setNombrePlatillo(mResultSet.getString("nombrePlatillo"));
+                platillo.setDescripcion(mResultSet.getString("descripcion"));
+                platillo.setPrecio(mResultSet.getFloat("precio"));
+                platillo.setIdEstablecimiento(mResultSet.getLong("idEstablecimiento"));
+                platillo.setValidado(mResultSet.getInt("validado"));
+                if(platillo.getValidado() == 1){
+                    platillos.add(platillo);
+                }
+            }
+            return platillos;
+        } catch (SQLException e){
+            return null;
+        }
+    }
+    // Crear reservación
+    public long createReservacion(long idUsuario,String token) {
+        try {
+            mStatement = con.createStatement();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO reservaciones (idUsuario,token) VALUES ('"  + idUsuario+ "','" + token + "')",Statement.RETURN_GENERATED_KEYS);
+            
+            int status = ps.executeUpdate();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (!rs.next()) throw new RuntimeException("no devolvió el ID");
+                int idReservacion = rs.getInt(1);
+                return idReservacion;
+            }
+            
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+            return 0;
+        }
+    }
+    public void createReservacionPlatillo(long idReservacion,long idPlatillo, int cantidad) {
+        try {
+            mStatement = con.createStatement();
+            mStatement.execute("INSERT INTO reservacionesplatillos  VALUES ('"  + idReservacion + "','" + idPlatillo + "','" + cantidad + "')");
+            
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
+    }
+    public boolean existeToken(String token) {
+        int id=0;
+         try {
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT * FROM reservaciones WHERE token = '" + token + "' ");
+            while (mResultSet.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+        return false;
+    }
 }
