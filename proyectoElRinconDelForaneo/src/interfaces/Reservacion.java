@@ -256,10 +256,8 @@ public class Reservacion extends javax.swing.JDialog {
         int cantidad,error = 0;
         if(PlatillosTabla.getRowCount() > 0)
             for(int i = 0; i < PlatillosTabla.getRowCount();i++){
-                System.out.println("i: " + i);
                 if(IsSelected(i, 4, PlatillosTabla)){
                     cantidad = (int) PlatillosTabla.getValueAt(i, 3);
-                    System.out.println("cantidad : " + cantidad);
                     if(cantidad < 1 || cantidad > 5){
                         selecciono = false;
                         error = 1;
@@ -278,7 +276,6 @@ public class Reservacion extends javax.swing.JDialog {
                 char caracterAleatorio = banco.charAt(indiceAleatorio);
                 token += caracterAleatorio;
             }
-            System.out.println("token: " + token);
             } while (servicio.existeToken(token));
             enviarDatosReservacion(token);
         }
@@ -290,8 +287,6 @@ public class Reservacion extends javax.swing.JDialog {
         int cantidad;
         for(int i = 0; i < PlatillosTabla.getRowCount();i++){
             if(IsSelected(i, 4, PlatillosTabla)){
-                System.out.println("col: " + i);
-                System.out.println("Cantidad : " + PlatillosTabla.getValueAt(i, 3));
                 idPlatillo = listPlatillos.get(i).getIdPlatillo();
                 cantidad = (int) PlatillosTabla.getValueAt(i, 3);
                 servicio.createReservacionPlatillo(idReservacion,idPlatillo,cantidad);
