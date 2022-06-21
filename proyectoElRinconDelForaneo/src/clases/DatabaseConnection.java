@@ -253,7 +253,7 @@ public class DatabaseConnection {
     // Listar platillos que son validos de un establecimiento
     public ArrayList<Platillos> listarPlatillosValidos(long idEstablecimiento){
         ArrayList<Platillos> platillos = new ArrayList<>();   
-        System.out.println("Tamaño "+idEstablecimiento);
+        //System.out.println("Tamaño "+idEstablecimiento);
         try{
             mStatement = con.createStatement();
             mResultSet = mStatement.executeQuery("SELECT * FROM platillos WHERE idEstablecimiento = '" + idEstablecimiento + "' ");
