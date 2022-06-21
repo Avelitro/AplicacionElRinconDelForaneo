@@ -28,10 +28,10 @@ public class HomeCliente extends javax.swing.JFrame {
     public HomeCliente(long idUsuario) {
         this.idUsuario = idUsuario;
         initComponents();
-        mostrarEstablecimientos();
+        listarEstablecimientos();
     }
     
-        public void mostrarEstablecimientos(){
+    public void listarEstablecimientos(){
         servicio = new DatabaseConnection();
         String[] titulo = new String[]{"Nombre del Establecimiento","Dirección","Telefono"};
         dtm.setColumnIdentifiers(titulo);
@@ -43,8 +43,11 @@ public class HomeCliente extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "Error al conectar");
         
-        for(establecimiento reco:listEstablecimientos)
-            addEstablecimiento(reco);
+        if(listEstablecimientos.size()>0){
+            for(establecimiento reco:listEstablecimientos)
+                addEstablecimiento(reco);
+        }else
+            sinEstablecimiento();
         
     }
         public void addEstablecimiento(establecimiento establecimiento_p){
@@ -56,6 +59,15 @@ public class HomeCliente extends javax.swing.JFrame {
     public int seleccionado(){
         int ref = TablaEstablecimiento.getSelectedRow();
         return ref;
+    }
+    
+    public void visualizarMenu(long idEstablecimiento){
+        Reservacion reserva = new Reservacion(idEstablecimiento,this.idUsuario);
+        reserva.setVisible(true);
+    }
+    
+    public void sinEstablecimiento(){
+        JOptionPane.showMessageDialog(null, "No hay establecimientos");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,15 +176,14 @@ public class HomeCliente extends javax.swing.JFrame {
     private void SalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SalidaActionPerformed
-
+    
+    //Aquí sería el seleccionarEstablecimiento().
     private void TablaEstablecimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaEstablecimientoMouseClicked
         // TODO add your handling code here:
         int i =  evt.getY()/TablaEstablecimiento.getRowHeight();
         idEstablecimiento = listEstablecimientos.get(i).getIdEstablecimiento();
-        if(servicio.listarPlatillosValidos(idEstablecimiento).size()>0){
-            Reservacion reserva = new Reservacion(idEstablecimiento,this.idUsuario);
-            reserva.setVisible(true);
-        }
+        if(servicio.listarPlatillosValidos(idEstablecimiento).size()>0)
+            visualizarMenu(idEstablecimiento); 
         else
             JOptionPane.showMessageDialog(null, "No hay platillos");
     }//GEN-LAST:event_TablaEstablecimientoMouseClicked
