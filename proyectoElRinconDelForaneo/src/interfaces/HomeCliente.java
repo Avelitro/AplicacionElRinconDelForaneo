@@ -3,16 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaces;
-
+import entity.establecimiento;
+import clases.DatabaseConnection;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author octavio
  */
 public class HomeCliente extends javax.swing.JFrame {
-
     /**
      * Creates new form P_HomeCliente
      */
+    public static ArrayList <establecimiento> listEstablecimientos = new ArrayList<>();
+    DatabaseConnection servicio;
+    public static DefaultTableModel dtm = new DefaultTableModel();
+    public static long idEstablecimiento;
+    
     private long idUsuario;
     public HomeCliente() {
         initComponents();
@@ -20,8 +28,35 @@ public class HomeCliente extends javax.swing.JFrame {
     public HomeCliente(long idUsuario) {
         this.idUsuario = idUsuario;
         initComponents();
+        mostrarEstablecimientos();
     }
-
+    
+        public void mostrarEstablecimientos(){
+        servicio = new DatabaseConnection();
+        String[] titulo = new String[]{"Nombre del Establecimiento","Dirección","Telefono"};
+        dtm.setColumnIdentifiers(titulo);
+        TablaEstablecimiento.setModel(dtm);
+        
+        if(servicio.Conectar()){
+            listEstablecimientos = servicio.listEstablecimiento();
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Error al conectar");
+        
+        for(establecimiento reco:listEstablecimientos)
+            addEstablecimiento(reco);
+        
+    }
+        public void addEstablecimiento(establecimiento establecimiento_p){
+       dtm.addRow(new Object[]{
+           establecimiento_p.getNombreEstablecimiento(), establecimiento_p.getDireccion(), String.valueOf(establecimiento_p.getTelefono())
+       });
+    }
+    
+    public int seleccionado(){
+        int ref = TablaEstablecimiento.getSelectedRow();
+        return ref;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +72,7 @@ public class HomeCliente extends javax.swing.JFrame {
         Salida = new javax.swing.JButton();
         TituloLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        TablaEstablecimiento = new javax.swing.JTable();
         ImgFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,7 +106,7 @@ public class HomeCliente extends javax.swing.JFrame {
 
         Background.add(tituloPlace, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 80));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TablaEstablecimiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -90,7 +125,12 @@ public class HomeCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        TablaEstablecimiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaEstablecimientoMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TablaEstablecimiento);
 
         Background.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 130, 1010, 280));
 
@@ -124,6 +164,18 @@ public class HomeCliente extends javax.swing.JFrame {
     private void SalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SalidaActionPerformed
+
+    private void TablaEstablecimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaEstablecimientoMouseClicked
+        // TODO add your handling code here:
+        int i =  evt.getY()/TablaEstablecimiento.getRowHeight();
+        idEstablecimiento = listEstablecimientos.get(i).getIdEstablecimiento();
+        if(servicio.listarPlatillosValidos(idEstablecimiento).size()>0){
+            Reservacion reserva = new Reservacion(idEstablecimiento,this.idUsuario);
+            reserva.setVisible(true);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "No hay platillos");
+    }//GEN-LAST:event_TablaEstablecimientoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -165,10 +217,10 @@ public class HomeCliente extends javax.swing.JFrame {
     private javax.swing.JPanel Background;
     private javax.swing.JLabel ImgFondo;
     private javax.swing.JButton Salida;
+    private javax.swing.JTable TablaEstablecimiento;
     private javax.swing.JLabel TituloLabel;
     private javax.swing.JLabel Usuario;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel tituloPlace;
     // End of variables declaration//GEN-END:variables
 }

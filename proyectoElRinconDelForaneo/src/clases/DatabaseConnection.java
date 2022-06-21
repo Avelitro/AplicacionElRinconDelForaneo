@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import entity.usuario;
 import entity.Platillos;
+import entity.establecimiento;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
@@ -313,5 +314,28 @@ public class DatabaseConnection {
             return false;
         }
         return false;
+    }
+    
+        public ArrayList<establecimiento> listEstablecimiento(){
+        ArrayList <establecimiento> listEstablecimientos = new ArrayList<>();
+        try{
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT * FROM establecimientos");
+            while(mResultSet.next()){
+                establecimiento establecimientos = new establecimiento();
+                establecimientos.setIdEstablecimiento(mResultSet.getLong("idEstablecimiento"));
+                establecimientos.setIdUsuario(mResultSet.getLong("idUsuario"));
+                establecimientos.setDireccion(mResultSet.getString("direccion"));
+                establecimientos.setNombreEstablecimiento(mResultSet.getString("nombreEstablecimiento"));
+                establecimientos.setTelefono(mResultSet.getLong("telefono"));
+                
+                listEstablecimientos.add(establecimientos);
+            }
+            return listEstablecimientos;
+        }catch(SQLException e){
+            System.err.println(e.toString());
+            return null;
+        }
+        
     }
 }

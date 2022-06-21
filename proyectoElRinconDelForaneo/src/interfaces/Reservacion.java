@@ -38,7 +38,7 @@ public class Reservacion extends javax.swing.JDialog {
         initComponents();
         this.idEstablecimiento = 6;
         this.idUsuario = 14;
-        this.servicio = new DatabaseConnection();
+        /*this.servicio = new DatabaseConnection();
         
         dtm = new DefaultTableModel(new String[]{"Nombre del platillo","Descripción","Precio","Cantidad","Selección"}, 0) {
  
@@ -61,7 +61,7 @@ public class Reservacion extends javax.swing.JDialog {
         else
             JOptionPane.showMessageDialog(null, "Error al conectar");
         for(Platillos reco:listPlatillos)
-            listarPlatillo(reco);
+            listarPlatillo(reco);*/
         
     }
     

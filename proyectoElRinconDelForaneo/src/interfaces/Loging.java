@@ -129,7 +129,6 @@ public class Loging extends javax.swing.JDialog {
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
-        //enviarDatosUsuario()
         
         if(!jTextCorreo.getText().equals("") && !jPasswordReg.getText().equals("")){
             if (mValidacion.ValidarEmail(jTextCorreo.getText().trim())) {
@@ -249,7 +248,7 @@ public class Loging extends javax.swing.JDialog {
             menuVendedor.setVisible(true);
             this.dispose();
         } else {
-            HomeCliente menuCliente = new HomeCliente();
+            HomeCliente menuCliente = new HomeCliente(idUsuario);
             menuCliente.setVisible(true);
             this.dispose();
         }
