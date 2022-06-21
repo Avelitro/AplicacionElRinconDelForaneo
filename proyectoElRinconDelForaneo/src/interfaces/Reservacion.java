@@ -36,10 +36,10 @@ public class Reservacion extends javax.swing.JDialog {
     // Constructor vacio
     public Reservacion() {
         initComponents();
-        this.idEstablecimiento = 6;
+        /*this.idEstablecimiento = 6;
         this.idUsuario = 14;
-        /*this.servicio = new DatabaseConnection();
-        
+        */this.servicio = new DatabaseConnection();
+        /*
         dtm = new DefaultTableModel(new String[]{"Nombre del platillo","Descripción","Precio","Cantidad","Selección"}, 0) {
  
             Class[] types = new Class[]{
@@ -92,7 +92,7 @@ public class Reservacion extends javax.swing.JDialog {
         }
         else
             JOptionPane.showMessageDialog(null, "Error al conectar");            
-        servicio.Desconectar();
+        //servicio.Desconectar();
         for(Platillos reco:listPlatillos)
             listarPlatillo(reco);
         
@@ -285,7 +285,9 @@ public class Reservacion extends javax.swing.JDialog {
     public void enviarDatosReservacion(String token){
         long idReservacion = servicio.createReservacion(this.idUsuario,token), idPlatillo;
         int cantidad;
+        
         for(int i = 0; i < PlatillosTabla.getRowCount();i++){
+            //System.out.println("Entre");
             if(IsSelected(i, 4, PlatillosTabla)){
                 idPlatillo = listPlatillos.get(i).getIdPlatillo();
                 cantidad = (int) PlatillosTabla.getValueAt(i, 3);
