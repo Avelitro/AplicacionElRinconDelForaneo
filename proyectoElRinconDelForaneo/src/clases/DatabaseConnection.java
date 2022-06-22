@@ -378,4 +378,20 @@ public class DatabaseConnection {
         }
         return Musuario;
     }
+    //Crear menu
+    public boolean crearMenu(long id) {
+        try{
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT * FROM establecimientos WHERE idUsuario = '" + id + "' ");
+            while (mResultSet.next()){
+                long idE=(mResultSet.getInt("idEstablecimiento"));
+                mStatement = con.createStatement();
+                mStatement.execute("INSERT INTO menu (idEstablecimiento) VALUES ('" + idE + "')");
+            }
+            return true;
+       }catch(SQLException e){
+           System.err.println(e.toString());
+            return false;
+        }
+    }
 }

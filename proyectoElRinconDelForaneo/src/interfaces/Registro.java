@@ -376,11 +376,11 @@ public class Registro extends javax.swing.JDialog {
             if(tipoUsuario.equals("Negocio")){
                 if( servicio.createEstablecimiento(idUsuario) )
                 {
+                    servicio.crearMenu(idUsuario);
                     registroCorrecto();
                 }
                 else
                 {
-                    //JOptionPane.showMessageDialog(null, "Error aqui");
                     registroIncorrecto();
                 }
             }
@@ -390,14 +390,7 @@ public class Registro extends javax.swing.JDialog {
         else
         {
             registroIncorrecto();
-        }
-        System.out.println("Nombre: "+ nUsuario.getNombres());
-        System.out.println("ApellidoP: "+ nUsuario.getApellidoPaterno());
-        System.out.println("ApellidoM: "+ nUsuario.getApellidoMaterno());
-        System.out.println("Correo: "+ nUsuario.getCorreo());
-        System.out.println("Password: "+ nUsuario.getContrasena());
-        System.out.println("TipoUsuario: "+ nUsuario.getTipoUsuario());
-        
+        }    
         
     }
     private void registroCorrecto()
