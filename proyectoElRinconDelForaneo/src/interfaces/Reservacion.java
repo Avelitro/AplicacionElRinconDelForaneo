@@ -315,7 +315,6 @@ public class Reservacion extends javax.swing.JDialog {
         establecimiento nEstablecimiento = new establecimiento();
         usuario nUsuario = new usuario();
         nEstablecimiento=servicio.listOneEstablecimiento(this.idEstablecimiento);
-        System.out.println(nEstablecimiento.getCorreoEstablecimiento());
         nUsuario=servicio.listOneUsuario(this.idUsuario);
         
         String correo="proyectoutm007@gmail.com";
