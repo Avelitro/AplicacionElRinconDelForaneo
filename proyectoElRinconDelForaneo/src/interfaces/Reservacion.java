@@ -6,6 +6,8 @@ package interfaces;
 
 import clases.DatabaseConnection;
 import entity.Platillos;
+import entity.establecimiento;
+import entity.usuario;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -15,6 +17,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -36,33 +54,7 @@ public class Reservacion extends javax.swing.JDialog {
     // Constructor vacio
     public Reservacion() {
         initComponents();
-        /*this.idEstablecimiento = 6;
-        this.idUsuario = 14;
-        */this.servicio = new DatabaseConnection();
-        /*
-        dtm = new DefaultTableModel(new String[]{"Nombre del platillo","Descripción","Precio","Cantidad","Selección"}, 0) {
- 
-            Class[] types = new Class[]{
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Integer.class,java.lang.Boolean.class
-            };
- 
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-            public boolean isCellEditable(int row, int column){
-                return editable[column];
-            }
-        };
-        PlatillosTabla.setModel(dtm);
-        
-        if(servicio.Conectar()){
-            listPlatillos = servicio.listarPlatillosValidos(this.idEstablecimiento);
-        }
-        else
-            JOptionPane.showMessageDialog(null, "Error al conectar");
-        for(Platillos reco:listPlatillos)
-            listarPlatillo(reco);*/
-        
+        this.servicio = new DatabaseConnection();        
     }
     
     public Reservacion(long idEstablecimiento,long idUsuario) {
@@ -91,8 +83,7 @@ public class Reservacion extends javax.swing.JDialog {
             listPlatillos = servicio.listarPlatillosValidos(this.idEstablecimiento);
         }
         else
-            JOptionPane.showMessageDialog(null, "Error al conectar");            
-        //servicio.Desconectar();
+            JOptionPane.showMessageDialog(null, "Error al conectar"); 
         for(Platillos reco:listPlatillos)
             listarPlatillo(reco);
         
@@ -175,7 +166,7 @@ public class Reservacion extends javax.swing.JDialog {
         PlatillosTabla.setToolTipText("");
         jScrollPane1.setViewportView(PlatillosTabla);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 680, 100));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 680, 160));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -286,14 +277,25 @@ public class Reservacion extends javax.swing.JDialog {
         long idReservacion = servicio.createReservacion(this.idUsuario,token), idPlatillo;
         int cantidad;
         
+        double total=0;
+        ArrayList<String> NombrePlatillos = new ArrayList<>();
         for(int i = 0; i < PlatillosTabla.getRowCount();i++){
-            //System.out.println("Entre");
             if(IsSelected(i, 4, PlatillosTabla)){
+                String cant=" de: ";
                 idPlatillo = listPlatillos.get(i).getIdPlatillo();
                 cantidad = (int) PlatillosTabla.getValueAt(i, 3);
                 servicio.createReservacionPlatillo(idReservacion,idPlatillo,cantidad);
+                //Obteniendo el precio total
+                total=(listPlatillos.get(i).getPrecio()*cantidad)+total;
+                cant=String.valueOf(cantidad)+cant;
+                cant=cant+listPlatillos.get(i).getNombrePlatillo();
+                NombrePlatillos.add(cant);
+                
             }
         }
+        enviarCorreo(total,NombrePlatillos,token);
+        JOptionPane.showMessageDialog(null, "Reservacion Exitosa. Se ha enviado correo con datos de su reservacion.");
+        this.dispose();
         
     }
     public static int numeroAleatorioEnRango(int minimo, int maximo) {
@@ -307,5 +309,64 @@ public class Reservacion extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningún platillo.", "¡Seleccione algún platillo!", JOptionPane.ERROR_MESSAGE);
         else
             JOptionPane.showMessageDialog(null, "El limite de reserva es 5 por platillo.","¡Exediste el número de platillo!",JOptionPane.ERROR_MESSAGE);
+    }
+    public void enviarCorreo(double total,ArrayList NombresPlatillos,String token)
+    {
+        establecimiento nEstablecimiento = new establecimiento();
+        usuario nUsuario = new usuario();
+        nEstablecimiento=servicio.listOneEstablecimiento(this.idEstablecimiento);
+        System.out.println(nEstablecimiento.getCorreoEstablecimiento());
+        nUsuario=servicio.listOneUsuario(this.idUsuario);
+        
+        String correo="proyectoutm007@gmail.com";
+        String contra="qdrqpvghhdergvkl";
+        
+        Properties p= new Properties();
+       p.put("mail.smtp.host","smtp.gmail.com");
+       p.setProperty("mail.smtp.starttls.enable","true");
+       p.put("mail.smtp.ssl.trust","smtp.gmail.com");
+       p.setProperty("mail.smtp.port","587");
+       p.setProperty("mail.smtp.user",correo);
+       p.setProperty("mail.smtp.auth","true");
+       Session s = Session.getDefaultInstance(p);
+       MimeMessage mensaje= new MimeMessage(s);
+       //Correo al vendedor
+        try {
+            mensaje.setFrom(new InternetAddress(correo));
+            mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(nEstablecimiento.getCorreoEstablecimiento()));
+            mensaje.setSubject("Reservacion de platillos");
+            mensaje.setText(
+                    "Platillos ordenados: "+ NombresPlatillos +
+                    " \nEl total a pagar es: " + total +
+                    " \nCodigo de reservacion: " +token
+            );
+            Transport t = s.getTransport("smtp");
+            t.connect(correo, contra);
+            t.sendMessage(mensaje, mensaje.getAllRecipients());
+            t.close();
+        } catch (AddressException ex) {
+            Logger.getLogger(Reservacion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(Reservacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Correo al cliente
+        try {
+            mensaje.setFrom(new InternetAddress(correo));
+            mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(nUsuario.getCorreo()));
+            mensaje.setSubject("Reservacion de platillos");
+            mensaje.setText(
+                    "Platillos ordenados: "+ NombresPlatillos +
+                    " \nEl total a pagar es: " + total +
+                    " \nCodigo de reservacion: " +token
+            );
+            Transport t = s.getTransport("smtp");
+            t.connect(correo, contra);
+            t.sendMessage(mensaje, mensaje.getAllRecipients());
+            t.close();
+        } catch (AddressException ex) {
+            Logger.getLogger(Reservacion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(Reservacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -336,6 +336,45 @@ public class DatabaseConnection {
             System.err.println(e.toString());
             return null;
         }
-        
+    }
+    //ListOne Establecimiento
+    public establecimiento listOneEstablecimiento(long id) {
+        establecimiento Mestablecimiento = null;
+         try {
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT establecimientos.idEstablecimiento as idEstablecimiento, establecimientos.nombreEstablecimiento as nombreEstablecimiento, establecimientos.direccion as direccion,establecimientos.telefono as telefono, usuarios.correo as correoEstablecimiento FROM establecimientos,usuarios WHERE establecimientos.idUsuario=usuarios.idUsuario AND idEstablecimiento = '" + id + "' ");
+            while (mResultSet.next()){
+                Mestablecimiento = new establecimiento();
+                Mestablecimiento.setIdEstablecimiento(mResultSet.getInt("idEstablecimiento"));
+                Mestablecimiento.setNombreEstablecimiento(mResultSet.getString("nombreEstablecimiento"));
+                Mestablecimiento.setDireccion(mResultSet.getString("direccion"));
+                Mestablecimiento.setTelefono(mResultSet.getInt("telefono"));
+                Mestablecimiento.setCorreoEstablecimiento(mResultSet.getString("correoEstablecimiento"));
+                return Mestablecimiento;
+            }
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+            return null;
+        }
+        return Mestablecimiento;
+    }
+    //ListOne Usuario
+    public usuario listOneUsuario(long id) {
+        usuario Musuario = null;
+         try {
+            mStatement = con.createStatement();
+            mResultSet = mStatement.executeQuery("SELECT * FROM usuarios WHERE idUsuario = '" + id + "' ");
+            while (mResultSet.next()){
+                Musuario = new usuario();
+                Musuario.setIdUsuario(mResultSet.getInt("idUsuario"));
+                Musuario.setNombres(mResultSet.getString("nombres"));
+                Musuario.setApellidoPaterno(mResultSet.getString("apellidoPaterno"));
+                Musuario.setApellidoMaterno(mResultSet.getString("apellidoMaterno"));
+                Musuario.setCorreo(mResultSet.getString("correo"));
+            }
+        } catch (SQLException e) {
+            return Musuario;
+        }
+        return Musuario;
     }
 }

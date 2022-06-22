@@ -14,7 +14,7 @@ public class establecimiento {
     String direccion;
     String nombreEstablecimiento;
     long telefono;
-    
+    String correoEstablecimiento;
     public void setIdEstablecimiento(long idEstablecimiento){
         this.idEstablecimiento = idEstablecimiento;
     }
@@ -54,4 +54,15 @@ public class establecimiento {
     public long getTelefono(){
        return this.telefono; 
     }
+    
+    public void setCorreoEstablecimiento(String correo)
+    {
+        this.correoEstablecimiento=correo;
+    }
+    public String getCorreoEstablecimiento()
+    {
+        return this.correoEstablecimiento;
+    }
+    
+    
 }
