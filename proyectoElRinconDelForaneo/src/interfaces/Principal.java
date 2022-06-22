@@ -104,13 +104,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_IngresoActionPerformed
 
     private void IngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IngresoMouseClicked
-        // TODO add your handling code here:
         Principal principal = new Principal();
+        // TODO add your handling code here:
         Loging logeo = new Loging(principal,true);
-        System.out.println(logeo);
         logeo.setVisible(true);
-        System.out.println(logeo);
-        this.dispose();
     }//GEN-LAST:event_IngresoMouseClicked
 
     private void RegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistroMouseClicked
