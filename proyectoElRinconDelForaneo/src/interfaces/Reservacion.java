@@ -54,7 +54,9 @@ public class Reservacion extends javax.swing.JDialog {
     // Constructor vacio
     public Reservacion() {
         initComponents();
-        this.servicio = new DatabaseConnection();        
+        this.servicio = new DatabaseConnection();
+         if(!servicio.Conectar())
+            JOptionPane.showMessageDialog(null, "Error al conectar"); 
     }
     
     public Reservacion(long idEstablecimiento,long idUsuario) {
