@@ -257,7 +257,7 @@ public class DatabaseConnection {
         //System.out.println("Tamaño "+idEstablecimiento);
         try{
             mStatement = con.createStatement();
-            mResultSet = mStatement.executeQuery("SELECT * FROM platillos WHERE idEstablecimiento = '" + idEstablecimiento + "' ");
+            mResultSet = mStatement.executeQuery("SELECT * FROM platillos WHERE validado = 1 AND idEstablecimiento = '" + idEstablecimiento + "' ");
             
             while(mResultSet.next()){
                 Platillos platillo = new Platillos();
@@ -267,9 +267,6 @@ public class DatabaseConnection {
                 platillo.setPrecio(mResultSet.getFloat("precio"));
                 platillo.setIdEstablecimiento(mResultSet.getLong("idEstablecimiento"));
                 platillo.setValidado(mResultSet.getInt("validado"));
-                if(platillo.getValidado() == 1){
-                    platillos.add(platillo);
-                }
             }
             return platillos;
         } catch (SQLException e){
