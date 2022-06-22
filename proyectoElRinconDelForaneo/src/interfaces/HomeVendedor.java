@@ -8,6 +8,7 @@ import clases.DatabaseConnection;
 import clases.validacion;
 import javax.swing.JPanel;
 import entity.Platillos;
+import entity.usuario;
 import javax.swing.JOptionPane;
 /**
  *
@@ -20,15 +21,17 @@ public class HomeVendedor extends javax.swing.JFrame {
      */
     private long idEstablecimiento;
     private long idUsuario;
-    private DatabaseConnection servicio;
+    public DatabaseConnection servicio;
     public HomeVendedor(long idUsuario) {
         initComponents();
         this.idUsuario = idUsuario;
-        System.out.println("idUsuario: "+this.idUsuario);
         this.servicio = new DatabaseConnection();
         if(servicio.Conectar()){
                 this.idEstablecimiento = servicio.getEstablecimientoByUsuario(this.idUsuario);
-                System.out.println("idEstablecimiento: "+ this.idEstablecimiento);
+                usuario nUsuario = new usuario();
+                nUsuario=servicio.listOneUsuario(idUsuario);
+                Usuario.setText(nUsuario.getNombres()+" "+nUsuario.getApellidoPaterno()+" "+nUsuario.getApellidoMaterno());
+        
             }
             else {
                 JOptionPane.showMessageDialog(null, "Error al conectarse a la base de datos.");
@@ -40,7 +43,6 @@ public class HomeVendedor extends javax.swing.JFrame {
     }
     public HomeVendedor() {
         initComponents();
-        
         ListadoPlatillos listado = new ListadoPlatillos();
         MostrarPanel(listado.getFondo());
     }
@@ -53,18 +55,6 @@ public class HomeVendedor extends javax.swing.JFrame {
         Content.revalidate();
         Content.repaint();
     }
-    /*public void listarPlatillo()
-    {
-        platillo nPlatillo=new platillo();
-        if(servicio.Conectar())
-        {
-          nPlatillo=servicio.getPlatillosByEstablecimiento(1);
-            System.out.println("PLATILLO: "+nPlatillo);  
-        }
-        
-        
-    }*/
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,7 +87,7 @@ public class HomeVendedor extends javax.swing.JFrame {
         Usuario.setForeground(new java.awt.Color(254, 254, 254));
         Usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuenta (2).png"))); // NOI18N
         Usuario.setText("Usuario");
-        jPanel1.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, -2, 130, 80));
+        jPanel1.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, -2, 230, 80));
 
         Salida.setForeground(new java.awt.Color(253, 251, 251));
         Salida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar-sesion (1).png"))); // NOI18N
@@ -267,7 +257,7 @@ public class HomeVendedor extends javax.swing.JFrame {
     private javax.swing.JPanel Content;
     private javax.swing.JButton Salida;
     private javax.swing.JLabel TituloLabel;
-    private javax.swing.JLabel Usuario;
+    public javax.swing.JLabel Usuario;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
     //public void 

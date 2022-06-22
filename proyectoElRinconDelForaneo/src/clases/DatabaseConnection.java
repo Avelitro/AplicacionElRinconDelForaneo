@@ -91,7 +91,8 @@ public class DatabaseConnection {
                 mUsuario = new usuario();
                 mUsuario.setIdUsuario(mResultSet.getInt("idUsuario"));
                 mUsuario.setNombres(mResultSet.getString("nombres"));
-                // mUsuario.setApellidos(mResultSet.getString("apellidos"));
+                mUsuario.setApellidoPaterno(mResultSet.getString("apellidoPaterno"));
+                mUsuario.setApellidoMaterno(mResultSet.getString("apellidoMaterno"));
                 mUsuario.setCorreo(mResultSet.getString("correo"));
                 mUsuario.setContrasena(mResultSet.getString("contraseña"));
                 mUsuario.setTipoUsuario(mResultSet.getString("tipoUsuario"));

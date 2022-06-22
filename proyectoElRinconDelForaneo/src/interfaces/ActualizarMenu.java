@@ -59,7 +59,7 @@ public class ActualizarMenu extends javax.swing.JFrame {
             if ( servicio.marcadorChecbox(listPlatillos.get(row).getIdPlatillo()) == 1 ){
                this.setOpaque(true);
                this.setBackground(Color.RED);
-               this.setForeground(Color.YELLOW);
+               this.setForeground(Color.BLACK);
             } else {
                this.setOpaque(true);
                this.setBackground(Color.BLACK);
@@ -152,7 +152,7 @@ public class ActualizarMenu extends javax.swing.JFrame {
         Background.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 120, -1));
 
         PlatillosTabla.setBackground(new java.awt.Color(4, 2, 2));
-        PlatillosTabla.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        PlatillosTabla.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         PlatillosTabla.setForeground(new java.awt.Color(254, 254, 254));
         jScrollPane1.setViewportView(PlatillosTabla);
 

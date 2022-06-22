@@ -5,6 +5,7 @@
 package interfaces;
 import entity.establecimiento;
 import clases.DatabaseConnection;
+import entity.usuario;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,9 @@ public class HomeCliente extends javax.swing.JFrame {
         this.idUsuario = idUsuario;
         initComponents();
         listarEstablecimientos();
+        usuario nUsuario = new usuario();
+        nUsuario=servicio.listOneUsuario(idUsuario);
+        Usuario.setText(nUsuario.getNombres()+" "+nUsuario.getApellidoPaterno()+" "+nUsuario.getApellidoMaterno());
     }
     
     public void listarEstablecimientos(){
@@ -98,13 +102,18 @@ public class HomeCliente extends javax.swing.JFrame {
         Usuario.setForeground(new java.awt.Color(254, 254, 254));
         Usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuenta (2).png"))); // NOI18N
         Usuario.setText("Usuario");
-        tituloPlace.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, -2, 130, 80));
+        tituloPlace.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, -2, 230, 80));
 
         Salida.setForeground(new java.awt.Color(253, 251, 251));
         Salida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar-sesion (1).png"))); // NOI18N
         Salida.setText("Salir");
         Salida.setBorderPainted(false);
         Salida.setContentAreaFilled(false);
+        Salida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SalidaMouseClicked(evt);
+            }
+        });
         Salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalidaActionPerformed(evt);
@@ -187,6 +196,13 @@ public class HomeCliente extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "No hay platillos");
     }//GEN-LAST:event_TablaEstablecimientoMouseClicked
+
+    private void SalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalidaMouseClicked
+        // TODO add your handling code here:
+        Principal principal = new Principal();
+        principal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SalidaMouseClicked
 
     /**
      * @param args the command line arguments
