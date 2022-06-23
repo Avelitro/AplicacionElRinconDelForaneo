@@ -2,11 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package interfaces;
+package iniciar;
 
+import iniciar.Principal;
 import clases.DatabaseConnection;
 import entity.usuario;
 import clases.validacion;
+import apartados.HomeCliente;
+import vendedor.HomeVendedor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;

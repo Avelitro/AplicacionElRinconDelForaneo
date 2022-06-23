@@ -4,7 +4,7 @@
  */
 package proyectoelrincondelforaneo;
 
-import interfaces.Principal;
+import iniciar.Principal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
