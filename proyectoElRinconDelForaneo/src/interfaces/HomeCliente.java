@@ -37,6 +37,8 @@ public class HomeCliente extends javax.swing.JFrame {
     
     public void listarEstablecimientos(){
         servicio = new DatabaseConnection();
+        dtm.setColumnCount(0);
+        dtm.setRowCount(0);
         String[] titulo = new String[]{"Nombre del Establecimiento","Dirección","Telefono"};
         dtm.setColumnIdentifiers(titulo);
         TablaEstablecimiento.setModel(dtm);
