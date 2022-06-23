@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -23,7 +24,8 @@ public class Loging extends javax.swing.JDialog {
      */
     private DatabaseConnection servicio;
     private validacion mValidacion;
-
+    private int termino = 0;
+    
     public Loging(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -152,7 +154,9 @@ public class Loging extends javax.swing.JDialog {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        this.dispose();
+        Principal principal = new Principal();
+        principal.setVisible(true);
+//        this.dispose();
     }// GEN-LAST:event_formWindowClosing
 
     private void jTextCorreoFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_jTextCorreoFocusGained
@@ -237,10 +241,13 @@ public class Loging extends javax.swing.JDialog {
 
     private void InicioSesion(String tipoUsuario, long idUsuario) {
         if (!"Cliente".equals(tipoUsuario)) {
+            termino = 1;
+            
             HomeVendedor menuVendedor = new HomeVendedor(idUsuario);
             menuVendedor.setVisible(true);
             this.dispose();
         } else {
+            termino = 1;
             HomeCliente menuCliente = new HomeCliente(idUsuario);
             menuCliente.setVisible(true);
             this.dispose();
@@ -249,5 +256,8 @@ public class Loging extends javax.swing.JDialog {
 
     private void datosIncorrectos() {
         JOptionPane.showMessageDialog(null, "El correo o la contraseña es incorrecta.");
+    }
+    public int termino(){
+        return termino;
     }
 }

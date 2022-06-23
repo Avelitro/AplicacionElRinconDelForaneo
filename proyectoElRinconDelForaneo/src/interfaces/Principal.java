@@ -4,6 +4,9 @@
  */
 package interfaces;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  *
  * @author octavio
@@ -108,6 +111,8 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         Loging logeo = new Loging(principal,true);
         logeo.setVisible(true);
+        if(logeo.termino() == 1)
+            this.dispose();
     }//GEN-LAST:event_IngresoMouseClicked
 
     private void RegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistroMouseClicked
